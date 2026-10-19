@@ -2,6 +2,7 @@ const MAX_WORD_LENGTH = 100;
 const DEFAULT_MODEL = "gemini-3.8-flash";
 const GEMINI_TIMEOUT_MS = 4500;
 const DICTIONARY_TIMEOUT_MS = 4000;
+const DATAMUSE_TIMEOUT_MS = 2500;
 export const config = { maxDuration: 10 };
 const PROMPT_TEXT = `Tạo nhanh một thẻ học từ vựng Anh-Việt chính xác cho từ được hỏi. Giải thích bằng tiếng Việt, ví dụ bằng tiếng Anh tự nhiên.
 Chỉ trả về JSON hợp lệ theo cấu trúc:
@@ -46,6 +47,15 @@ function sendJson(response, status, value) {
   return response.status(status).json(value);
 }
 
+async function readJsonResponse(response, serviceName) {
+  const body = await response.text();
+  try {
+    return JSON.parse(body);
+  } catch (cause) {
+    throw new Error(`${serviceName} trả về dữ liệu không phải JSON (${response.status}).`, { cause });
+  }
+}
+
 function dictionaryCard(entry, word) {
   const meanings = Array.isArray(entry?.meanings) ? entry.meanings : [];
   const firstMeaning = meanings[0] || {};
@@ -73,11 +83,36 @@ async function fetchFreeDictionary(word) {
   const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`, {
     signal: AbortSignal.timeout(DICTIONARY_TIMEOUT_MS),
   });
-  const data = await response.json();
+  const data = await readJsonResponse(response, "Free Dictionary");
   if (!response.ok || !Array.isArray(data) || !data[0]) {
     throw new Error("Không tìm thấy từ trong từ điển dự phòng.");
   }
   return dictionaryCard(data[0], word);
+}
+
+async function fetchDatamuse(word) {
+  const response = await fetch(
+    `https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=dpr&max=1`,
+    { signal: AbortSignal.timeout(DATAMUSE_TIMEOUT_MS) },
+  );
+  const data = await readJsonResponse(response, "Datamuse");
+  const entry = data?.[0];
+  const definition = entry?.defs?.[0]?.replace(/^[a-z]+\t/i, "").trim();
+  if (!response.ok || !entry || !definition) {
+    throw new Error("Không tìm thấy định nghĩa dự phòng.");
+  }
+  const partOfSpeech = entry.defs[0].split("\t")[0] || "word";
+  return {
+    word: entry.word || word,
+    pronunciation: "",
+    partOfSpeech,
+    translation: definition,
+    collocations: [],
+    context: "Định nghĩa tiếng Anh từ Datamuse khi các dịch vụ chính không khả dụng.",
+    examples: [{ sentence: "No example sentence available.", translation: "" }],
+    synonyms: [],
+    commonMistakes: [],
+  };
 }
 
 function setCorsHeaders(response) {
@@ -118,7 +153,7 @@ export default async function handler(request, response) {
           }),
           signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
         });
-        const aiData = await aiResponse.json();
+        const aiData = await readJsonResponse(aiResponse, "Gemini");
         if (!aiResponse.ok) {
           const error = new Error(aiData.error?.message || `Gemini trả về lỗi ${aiResponse.status}.`);
           error.status = aiResponse.status;
@@ -137,14 +172,21 @@ export default async function handler(request, response) {
         console.warn("Gemini không khả dụng, dùng từ điển dự phòng:", error.message);
       }
     }
-    if (!result) result = await fetchFreeDictionary(word);
+    if (!result) {
+      try {
+        result = await fetchFreeDictionary(word);
+      } catch (dictionaryError) {
+        console.warn("Free Dictionary không khả dụng, dùng Datamuse:", dictionaryError.message);
+        result = await fetchDatamuse(word);
+      }
+    }
     response.setHeader("Cache-Control", "private, max-age=300");
     return sendJson(response, 200, result);
   } catch (error) {
     if (error?.name === "TimeoutError" || error?.name === "AbortError") {
       error = new Error("Dịch vụ từ điển phản hồi quá lâu. Vui lòng thử lại sau vài giây.");
     }
-    const status = Number.isInteger(error?.status) ? error.status : 500;
+    const status = Number.isInteger(error?.status) ? error.status : 502;
     console.error("vocabulary function failed", {
       status,
       message: error?.message,
