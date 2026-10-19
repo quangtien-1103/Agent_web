@@ -92,39 +92,69 @@ async function fetchFreeDictionary(word) {
 }
 
 async function fetchDatamuse(word) {
-  const response = await fetch(
-    `https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=dpr&max=1`,
-    { signal: AbortSignal.timeout(DATAMUSE_TIMEOUT_MS) },
-  );
-  const data = await readJsonResponse(response, "Datamuse");
+  const base = "https://api.datamuse.com/words";
+  const requestWords = (query) => fetch(`${base}?${query}`, {
+    signal: AbortSignal.timeout(DATAMUSE_TIMEOUT_MS),
+  }).then((response) => readJsonResponse(response, "Datamuse"));
+  const [definitions, synonyms, related] = await Promise.all([
+    requestWords(`sp=${encodeURIComponent(word)}&md=dpr&max=1`),
+    requestWords(`rel_syn=${encodeURIComponent(word)}&max=3`),
+    requestWords(`rel_jjb=${encodeURIComponent(word)}&max=3`),
+  ]);
+  const data = definitions;
   const entry = data?.[0];
   const definition = entry?.defs?.[0]?.replace(/^[a-z]+\t/i, "").trim();
-  if (!response.ok || !entry || !definition) {
+  if (!entry || !definition) {
     throw new Error("Không tìm thấy định nghĩa dự phòng.");
   }
   const partOfSpeech = entry.defs[0].split("\t")[0] || "word";
-  let translation = definition;
-  try {
-    const translationResponse = await fetch(
-      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(definition)}&langpair=en|vi`,
-      { signal: AbortSignal.timeout(TRANSLATION_TIMEOUT_MS) },
-    );
-    const translationData = await readJsonResponse(translationResponse, "MyMemory");
-    const translatedText = translationData?.responseData?.translatedText?.trim();
-    if (translationResponse.ok && translatedText) translation = translatedText;
-  } catch (translationError) {
-    console.warn("Không dịch được định nghĩa dự phòng:", translationError.message);
-  }
+  const translate = async (text) => {
+    try {
+      const response = await fetch(
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|vi`,
+        { signal: AbortSignal.timeout(TRANSLATION_TIMEOUT_MS) },
+      );
+      const translated = await readJsonResponse(response, "MyMemory");
+      return translated?.responseData?.translatedText?.trim() || text;
+    } catch (error) {
+      console.warn("Không dịch được nội dung dự phòng:", error.message);
+      return text;
+    }
+  };
+  const sentences = [
+    `I use ${word} every day.`,
+    `We need to ${word} this carefully.`,
+    `This is a useful example of ${word}.`,
+  ];
+  const [translation, ...exampleTranslations] = await Promise.all([
+    translate(definition),
+    ...sentences.map(translate),
+  ]);
+  const collocationWords = related?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
+  const collocations = await Promise.all(collocationWords.map(async (item) => ({
+    phrase: `${item} ${word}`,
+    translation: await translate(`${item} ${word}`),
+  })));
+  const synonymItems = synonyms?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
   return {
     word: entry.word || word,
     pronunciation: "",
     partOfSpeech,
     translation,
-    collocations: [],
+    collocations,
     context: "Thẻ dự phòng được tạo khi Gemini và Free Dictionary tạm thời không khả dụng.",
-    examples: [{ sentence: "No example sentence available.", translation: "" }],
-    synonyms: [],
-    commonMistakes: [],
+    examples: sentences.map((sentence, index) => ({
+      sentence,
+      translation: exampleTranslations[index],
+    })),
+    synonyms: synonymItems.map((item) => ({
+      word: item,
+      difference: "Từ có nghĩa gần giống; hãy kiểm tra ngữ cảnh trước khi thay thế.",
+    })),
+    commonMistakes: [
+      `Đặt "${word}" đúng vị trí trong câu và kiểm tra loại từ (${partOfSpeech}).`,
+      "Không dịch từng từ theo tiếng Việt; hãy học cả cụm và câu ví dụ.",
+    ],
   };
 }
 
