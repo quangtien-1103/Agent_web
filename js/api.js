@@ -1,7 +1,11 @@
+const VOCABULARY_API_ORIGIN = "https://agentweb-chi.vercel.app";
+
 async function request(endpoint, payload) {
   let response;
   try {
-    response = await fetch(`/api/${endpoint}`, {
+    const path = `/api/${endpoint}`;
+    const url = endpoint === "vocabulary" ? `${VOCABULARY_API_ORIGIN}${path}` : path;
+    response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

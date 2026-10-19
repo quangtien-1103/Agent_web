@@ -80,7 +80,17 @@ async function fetchFreeDictionary(word) {
   return dictionaryCard(data[0], word);
 }
 
+function setCorsHeaders(response) {
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
+
 export default async function handler(request, response) {
+  setCorsHeaders(response);
+  if (request.method === "OPTIONS") {
+    return response.status(204).end();
+  }
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
     return sendJson(response, 405, { error: "Method not allowed." });
