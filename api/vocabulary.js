@@ -44,6 +44,40 @@ function sendJson(response, status, value) {
   return response.status(status).json(value);
 }
 
+function dictionaryCard(entry, word) {
+  const meanings = Array.isArray(entry?.meanings) ? entry.meanings : [];
+  const firstMeaning = meanings[0] || {};
+  const definition = firstMeaning.definitions?.[0] || {};
+  const phonetic = entry?.phonetic || entry?.phonetics?.find((item) => item.text)?.text || "";
+  const examples = meanings
+    .flatMap((meaning) => meaning.definitions || [])
+    .filter((item) => item.example)
+    .slice(0, 3)
+    .map((item) => ({ sentence: item.example, translation: "" }));
+  return {
+    word: entry?.word || word,
+    pronunciation: phonetic,
+    partOfSpeech: firstMeaning.partOfSpeech || "word",
+    translation: definition.definition || "Chưa tìm thấy nghĩa tiếng Việt.",
+    collocations: [],
+    context: "Nghĩa và ví dụ được lấy từ Free Dictionary khi AI tạm thời không khả dụng.",
+    examples: examples.length ? examples : [{ sentence: "No example sentence available.", translation: "" }],
+    synonyms: [],
+    commonMistakes: [],
+  };
+}
+
+async function fetchFreeDictionary(word) {
+  const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`, {
+    signal: AbortSignal.timeout(8000),
+  });
+  const data = await response.json();
+  if (!response.ok || !Array.isArray(data) || !data[0]) {
+    throw new Error("Không tìm thấy từ trong từ điển dự phòng.");
+  }
+  return dictionaryCard(data[0], word);
+}
+
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
@@ -53,43 +87,47 @@ export default async function handler(request, response) {
   try {
     const word = requiredWord(request.body?.word);
     const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-    if (!apiKey) {
-      const error = new Error("Chưa cấu hình GEMINI_API_KEY trên Vercel.");
-      error.status = 500;
-      throw error;
-    }
 
-    const model = process.env.AI_MODEL || DEFAULT_MODEL;
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
-    const aiResponse = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: `${PROMPT_TEXT}\n\nTỪ CẦN TRA:\n${JSON.stringify({ word })}` }] }],
-        generationConfig: {
-          responseMimeType: "application/json",
-          temperature: 0.2,
-          maxOutputTokens: 900,
-        },
-      }),
-      signal: AbortSignal.timeout(50000),
-    });
-    const aiData = await aiResponse.json();
-    if (!aiResponse.ok) {
-      const error = new Error(aiData.error?.message || `Gemini trả về lỗi ${aiResponse.status}.`);
-      error.status = aiResponse.status;
-      const retryAfter = aiData.error?.details?.find((detail) => detail.retryDelay)?.retryDelay;
-      if (aiResponse.status === 429) {
-        error.message = retryAfter
-          ? `Gemini đã hết quota miễn phí. Hãy thử lại sau khoảng ${retryAfter}.`
-          : "Gemini đã hết quota miễn phí. Hãy thử lại sau hoặc kiểm tra gói và billing.";
-        if (retryAfter) response.setHeader("Retry-After", retryAfter.replace("s", ""));
+    let result;
+    if (apiKey) {
+      const model = process.env.AI_MODEL || DEFAULT_MODEL;
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      try {
+        const aiResponse = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ role: "user", parts: [{ text: `${PROMPT_TEXT}\n\nTỪ CẦN TRA:\n${JSON.stringify({ word })}` }] }],
+            generationConfig: {
+              responseMimeType: "application/json",
+              temperature: 0.2,
+              maxOutputTokens: 900,
+            },
+          }),
+          signal: AbortSignal.timeout(15000),
+        });
+        const aiData = await aiResponse.json();
+        if (!aiResponse.ok) {
+          const error = new Error(aiData.error?.message || `Gemini trả về lỗi ${aiResponse.status}.`);
+          error.status = aiResponse.status;
+          const retryAfter = aiData.error?.details?.find((detail) => detail.retryDelay)?.retryDelay;
+          if (aiResponse.status === 429) {
+            error.message = retryAfter
+              ? `Gemini đã hết quota miễn phí. Hãy thử lại sau khoảng ${retryAfter}.`
+              : "Gemini đã hết quota miễn phí.";
+            if (retryAfter) response.setHeader("Retry-After", retryAfter.replace("s", ""));
+          }
+          throw error;
+        }
+        const text = aiData.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("");
+        result = parseModelJson(text);
+      } catch (error) {
+        console.warn("Gemini không khả dụng, dùng từ điển dự phòng:", error.message);
       }
-      throw error;
     }
-    const text = aiData.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("");
+    if (!result) result = await fetchFreeDictionary(word);
     response.setHeader("Cache-Control", "private, max-age=300");
-    return sendJson(response, 200, parseModelJson(text));
+    return sendJson(response, 200, result);
   } catch (error) {
     if (error?.name === "TimeoutError" || error?.name === "AbortError") {
       error = new Error("Gemini phản hồi quá lâu. Hãy thử lại sau vài giây hoặc kiểm tra model/API key trên Vercel.");
