@@ -3,6 +3,7 @@ const DEFAULT_MODEL = "gemini-3.8-flash";
 const GEMINI_TIMEOUT_MS = 4500;
 const DICTIONARY_TIMEOUT_MS = 4000;
 const DATAMUSE_TIMEOUT_MS = 2500;
+const TRANSLATION_TIMEOUT_MS = 2000;
 export const config = { maxDuration: 10 };
 const PROMPT_TEXT = `Tạo nhanh một thẻ học từ vựng Anh-Việt chính xác cho từ được hỏi. Giải thích bằng tiếng Việt, ví dụ bằng tiếng Anh tự nhiên.
 Chỉ trả về JSON hợp lệ theo cấu trúc:
@@ -102,13 +103,25 @@ async function fetchDatamuse(word) {
     throw new Error("Không tìm thấy định nghĩa dự phòng.");
   }
   const partOfSpeech = entry.defs[0].split("\t")[0] || "word";
+  let translation = definition;
+  try {
+    const translationResponse = await fetch(
+      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(definition)}&langpair=en|vi`,
+      { signal: AbortSignal.timeout(TRANSLATION_TIMEOUT_MS) },
+    );
+    const translationData = await readJsonResponse(translationResponse, "MyMemory");
+    const translatedText = translationData?.responseData?.translatedText?.trim();
+    if (translationResponse.ok && translatedText) translation = translatedText;
+  } catch (translationError) {
+    console.warn("Không dịch được định nghĩa dự phòng:", translationError.message);
+  }
   return {
     word: entry.word || word,
     pronunciation: "",
     partOfSpeech,
-    translation: definition,
+    translation,
     collocations: [],
-    context: "Định nghĩa tiếng Anh từ Datamuse khi các dịch vụ chính không khả dụng.",
+    context: "Thẻ dự phòng được tạo khi Gemini và Free Dictionary tạm thời không khả dụng.",
     examples: [{ sentence: "No example sentence available.", translation: "" }],
     synonyms: [],
     commonMistakes: [],
