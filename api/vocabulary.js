@@ -1,5 +1,6 @@
 const MAX_WORD_LENGTH = 100;
 const DEFAULT_MODEL = "gemini-3.8-flash";
+export const config = { maxDuration: 60 };
 const PROMPT_TEXT = `Tạo nhanh một thẻ học từ vựng Anh-Việt chính xác cho từ được hỏi. Giải thích bằng tiếng Việt, ví dụ bằng tiếng Anh tự nhiên.
 Chỉ trả về JSON hợp lệ theo cấu trúc:
 {"word":"...","pronunciation":"IPA","partOfSpeech":"...","translation":"...","collocations":[{"phrase":"...","translation":"..."}],"context":"...","examples":[{"sentence":"...","translation":"..."}],"synonyms":[{"word":"...","difference":"..."}],"commonMistakes":["..."]}
@@ -68,10 +69,10 @@ export default async function handler(request, response) {
         generationConfig: {
           responseMimeType: "application/json",
           temperature: 0.2,
-          maxOutputTokens: 1200,
+          maxOutputTokens: 900,
         },
       }),
-      signal: AbortSignal.timeout(20000),
+      signal: AbortSignal.timeout(50000),
     });
     const aiData = await aiResponse.json();
     if (!aiResponse.ok) {
@@ -81,6 +82,9 @@ export default async function handler(request, response) {
     response.setHeader("Cache-Control", "private, max-age=300");
     return sendJson(response, 200, parseModelJson(text));
   } catch (error) {
+    if (error?.name === "TimeoutError" || error?.name === "AbortError") {
+      error = new Error("Gemini phản hồi quá lâu. Hãy thử lại sau vài giây hoặc kiểm tra model/API key trên Vercel.");
+    }
     const status = Number.isInteger(error?.status) ? error.status : 500;
     return sendJson(response, status, {
       error: error.message || "Không thể tạo thẻ từ lúc này.",
