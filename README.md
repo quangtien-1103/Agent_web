@@ -25,6 +25,18 @@ Không mở trực tiếp các file HTML bằng `file://`: trình duyệt cần 
 
 API key chỉ được đọc ở backend, không nhúng vào mã trình duyệt. Trong `server/.env`, đặt `AI_PROVIDER` là `gemini`, `groq` hoặc `claude`, rồi cung cấp biến khóa tương ứng (`GEMINI_API_KEY`, `GROQ_API_KEY` hoặc `ANTHROPIC_API_KEY`). Tùy chọn `AI_MODEL` ghi đè model mặc định của provider.
 
+## Triển khai lên Vercel
+
+Website đã có Vercel Serverless Function tại [api/vocabulary.js](./api/vocabulary.js). Khi triển khai repository lên Vercel:
+
+1. Chọn thư mục gốc `D:\agent_english` làm Root Directory.
+2. Không đưa `server/.env` lên GitHub.
+3. Trong Vercel Project Settings → Environment Variables, thêm `GEMINI_API_KEY`.
+4. Có thể thêm `AI_MODEL` để chọn model Gemini.
+5. Deploy lại project.
+
+Frontend vẫn gọi `POST /api/vocabulary`; Vercel tự ánh xạ request này tới `api/vocabulary.js`. Local development vẫn dùng endpoint tương ứng trong `server/server.js`.
+
 ## Tính năng
 
 - Trang chủ hiển thị tiến độ, chuỗi ngày học và từ vừa tra.
