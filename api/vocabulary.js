@@ -1,5 +1,5 @@
 const MAX_WORD_LENGTH = 100;
-const DEFAULT_MODEL = "gemini-2.5-flash";
+const DEFAULT_MODEL = "gemini-3.8-flash";
 const PROMPT_TEXT = `Bạn là gia sư tiếng Anh cho người Việt. Tạo thẻ học từ vựng rõ ràng, chính xác, phù hợp với từ được hỏi. Nội dung giải thích bằng tiếng Việt; ví dụ dùng tiếng Anh tự nhiên.
 Trả về đúng cấu trúc JSON:
 {"word":"từ tiếng Anh","pronunciation":"IPA","partOfSpeech":"từ loại","translation":"nghĩa tiếng Việt","collocations":[{"phrase":"cụm từ tiếng Anh","translation":"nghĩa tiếng Việt của cả cụm từ"}],"context":"mô tả ngữ cảnh và mức độ trang trọng","examples":[{"sentence":"English example.","translation":"Bản dịch."}],"synonyms":[{"word":"từ gần nghĩa","difference":"khác biệt ngắn"}],"commonMistakes":["lỗi thường gặp"]}
