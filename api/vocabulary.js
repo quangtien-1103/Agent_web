@@ -78,6 +78,7 @@ export default async function handler(request, response) {
       throw new Error(aiData.error?.message || `Gemini trả về lỗi ${aiResponse.status}.`);
     }
     const text = aiData.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("");
+    response.setHeader("Cache-Control", "private, max-age=300");
     return sendJson(response, 200, parseModelJson(text));
   } catch (error) {
     const status = Number.isInteger(error?.status) ? error.status : 500;

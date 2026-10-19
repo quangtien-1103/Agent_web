@@ -9,6 +9,36 @@ mountFooter();
 const result = document.querySelector("#word-result");
 let currentCard = null;
 let loading = false;
+const WORD_CACHE_PREFIX = "english-web:word-card:";
+const WORD_CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
+
+function wordCacheKey(word) {
+  return `${WORD_CACHE_PREFIX}${word.trim().toLowerCase()}`;
+}
+
+function readCachedCard(word) {
+  try {
+    const raw = localStorage.getItem(wordCacheKey(word));
+    if (!raw) return null;
+    const cached = JSON.parse(raw);
+    if (!cached?.savedAt || Date.now() - cached.savedAt > WORD_CACHE_TTL || !cached.card?.word) {
+      localStorage.removeItem(wordCacheKey(word));
+      return null;
+    }
+    return cached.card;
+  } catch (error) {
+    console.warn("Không thể đọc cache từ vựng.", error);
+    return null;
+  }
+}
+
+function writeCachedCard(card) {
+  try {
+    localStorage.setItem(wordCacheKey(card.word), JSON.stringify({ savedAt: Date.now(), card }));
+  } catch (error) {
+    console.warn("Không thể lưu cache từ vựng.", error);
+  }
+}
 
 function renderSavedWords() {
   const { savedWords, dueWords } = getLearningData();
@@ -47,12 +77,21 @@ function renderCard(card) {
 async function lookup(word) {
   const normalized = word.trim();
   if (!normalized || loading) return;
+  const cachedCard = readCachedCard(normalized);
+  if (cachedCard) {
+    recordLookup(cachedCard);
+    renderCard(cachedCard);
+    renderSavedWords();
+    showToast("Đã hiển thị từ đã lưu trong bộ nhớ máy.");
+    return;
+  }
   loading = true;
   const button = document.querySelector("#word-search button[type=submit]");
   if (button) button.disabled = true;
   showLoading(result, `Đang tìm hiểu “${normalized}”...`);
   try {
     const card = await generateWordCard(normalized);
+    writeCachedCard(card);
     recordLookup(card);
     renderCard(card);
     renderSavedWords();
