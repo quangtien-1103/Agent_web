@@ -1,9 +1,9 @@
 const MAX_WORD_LENGTH = 100;
 const DEFAULT_MODEL = "gemini-3.8-flash";
-const PROMPT_TEXT = `Bạn là gia sư tiếng Anh cho người Việt. Tạo thẻ học từ vựng rõ ràng, chính xác, phù hợp với từ được hỏi. Nội dung giải thích bằng tiếng Việt; ví dụ dùng tiếng Anh tự nhiên.
-Trả về đúng cấu trúc JSON:
-{"word":"từ tiếng Anh","pronunciation":"IPA","partOfSpeech":"từ loại","translation":"nghĩa tiếng Việt","collocations":[{"phrase":"cụm từ tiếng Anh","translation":"nghĩa tiếng Việt của cả cụm từ"}],"context":"mô tả ngữ cảnh và mức độ trang trọng","examples":[{"sentence":"English example.","translation":"Bản dịch."}],"synonyms":[{"word":"từ gần nghĩa","difference":"khác biệt ngắn"}],"commonMistakes":["lỗi thường gặp"]}
-Tạo 2-3 cụm từ và luôn dịch nghĩa tiếng Việt cho từng cụm từ, 3 ví dụ có bản dịch, 2 từ gần nghĩa. Không bịa từ không tồn tại. Chỉ trả về JSON hợp lệ, không dùng markdown.`;
+const PROMPT_TEXT = `Tạo nhanh một thẻ học từ vựng Anh-Việt chính xác cho từ được hỏi. Giải thích bằng tiếng Việt, ví dụ bằng tiếng Anh tự nhiên.
+Chỉ trả về JSON hợp lệ theo cấu trúc:
+{"word":"...","pronunciation":"IPA","partOfSpeech":"...","translation":"...","collocations":[{"phrase":"...","translation":"..."}],"context":"...","examples":[{"sentence":"...","translation":"..."}],"synonyms":[{"word":"...","difference":"..."}],"commonMistakes":["..."]}
+Yêu cầu: 2-3 collocations có bản dịch cả cụm, 3 examples có bản dịch, 2 synonyms. Không dùng markdown, không giải thích ngoài JSON.`;
 
 function requiredWord(value) {
   if (typeof value !== "string" || !value.trim()) {
@@ -65,9 +65,13 @@ export default async function handler(request, response) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ role: "user", parts: [{ text: `${PROMPT_TEXT}\n\nTỪ CẦN TRA:\n${JSON.stringify({ word })}` }] }],
-        generationConfig: { responseMimeType: "application/json", temperature: 0.6 },
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.2,
+          maxOutputTokens: 1200,
+        },
       }),
-      signal: AbortSignal.timeout(45000),
+      signal: AbortSignal.timeout(20000),
     });
     const aiData = await aiResponse.json();
     if (!aiResponse.ok) {
