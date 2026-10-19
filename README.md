@@ -33,9 +33,23 @@ Website đã có Vercel Serverless Function tại [api/vocabulary.js](./api/voca
 2. Không đưa `server/.env` lên GitHub.
 3. Trong Vercel Project Settings → Environment Variables, thêm `GEMINI_API_KEY`.
 4. Có thể thêm `AI_MODEL` để chọn model Gemini.
-5. Deploy lại project.
+5. Đảm bảo deployment có cả thư mục `api/` và file [vercel.json](./vercel.json).
+6. Deploy lại project.
 
 Frontend vẫn gọi `POST /api/vocabulary`; Vercel tự ánh xạ request này tới `api/vocabulary.js`. Local development vẫn dùng endpoint tương ứng trong `server/server.js`.
+
+Nếu trình duyệt báo `Unexpected token '<'` khi tra từ, response đang là HTML
+(`<!DOCTYPE html>`) chứ không phải JSON. Hãy kiểm tra URL deployment:
+
+```sh
+curl.exe -i -X POST https://your-domain.vercel.app/api/vocabulary ^
+  -H "Content-Type: application/json" ^
+  -d "{\"word\":\"reach\"}"
+```
+
+Response hợp lệ phải có `content-type: application/json`. Nếu nhận `text/html`,
+hãy kiểm tra Vercel Root Directory là thư mục gốc repository (không phải `api/`)
+và redeploy đúng commit mới nhất.
 
 ## Tính năng
 
