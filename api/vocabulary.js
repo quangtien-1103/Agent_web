@@ -1,6 +1,8 @@
 const MAX_WORD_LENGTH = 100;
 const DEFAULT_MODEL = "gemini-3.8-flash";
-export const config = { maxDuration: 60 };
+const GEMINI_TIMEOUT_MS = 4500;
+const DICTIONARY_TIMEOUT_MS = 4000;
+export const config = { maxDuration: 10 };
 const PROMPT_TEXT = `Tạo nhanh một thẻ học từ vựng Anh-Việt chính xác cho từ được hỏi. Giải thích bằng tiếng Việt, ví dụ bằng tiếng Anh tự nhiên.
 Chỉ trả về JSON hợp lệ theo cấu trúc:
 {"word":"...","pronunciation":"IPA","partOfSpeech":"...","translation":"...","collocations":[{"phrase":"...","translation":"..."}],"context":"...","examples":[{"sentence":"...","translation":"..."}],"synonyms":[{"word":"...","difference":"..."}],"commonMistakes":["..."]}
@@ -69,7 +71,7 @@ function dictionaryCard(entry, word) {
 
 async function fetchFreeDictionary(word) {
   const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`, {
-    signal: AbortSignal.timeout(8000),
+    signal: AbortSignal.timeout(DICTIONARY_TIMEOUT_MS),
   });
   const data = await response.json();
   if (!response.ok || !Array.isArray(data) || !data[0]) {
@@ -104,7 +106,7 @@ export default async function handler(request, response) {
               maxOutputTokens: 900,
             },
           }),
-          signal: AbortSignal.timeout(15000),
+          signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
         });
         const aiData = await aiResponse.json();
         if (!aiResponse.ok) {
