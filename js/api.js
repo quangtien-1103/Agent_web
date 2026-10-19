@@ -11,17 +11,18 @@ async function request(endpoint, payload) {
   }
 
   const contentType = response.headers.get("content-type") || "";
+  const body = await response.text();
   let data;
   try {
-    const body = await response.text();
     data = JSON.parse(body);
   } catch (error) {
     if (contentType.includes("text/html")) {
-      throw new Error(`Endpoint /api/${endpoint} chưa được Vercel triển khai hoặc đang trả về trang HTML (${response.status}).`, { cause: error });
+      const preview = body.replace(/\s+/g, " ").slice(0, 180);
+      throw new Error(`API /api/${endpoint} trả về HTML thay vì JSON (${response.status}). ${preview}`, { cause: error });
     }
-    throw new Error(`Máy chủ trả về dữ liệu không hợp lệ (${response.status}).`, { cause: error });
+    throw new Error(`Máy chủ trả về dữ liệu không hợp lệ (${response.status}). ${body.slice(0, 180)}`, { cause: error });
   }
-  if (!response.ok) throw new Error(data.error || `Yêu cầu thất bại (${response.status}).`);
+  if (!response.ok) throw new Error(data?.error || `Yêu cầu thất bại (${response.status}).`);
   return data;
 }
 

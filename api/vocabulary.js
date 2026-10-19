@@ -132,9 +132,14 @@ export default async function handler(request, response) {
     return sendJson(response, 200, result);
   } catch (error) {
     if (error?.name === "TimeoutError" || error?.name === "AbortError") {
-      error = new Error("Gemini phản hồi quá lâu. Hãy thử lại sau vài giây hoặc kiểm tra model/API key trên Vercel.");
+      error = new Error("Dịch vụ từ điển phản hồi quá lâu. Vui lòng thử lại sau vài giây.");
     }
     const status = Number.isInteger(error?.status) ? error.status : 500;
+    console.error("vocabulary function failed", {
+      status,
+      message: error?.message,
+      stack: error?.stack,
+    });
     return sendJson(response, status, {
       error: error.message || "Không thể tạo thẻ từ lúc này.",
     });
