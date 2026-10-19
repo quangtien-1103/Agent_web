@@ -76,7 +76,16 @@ export default async function handler(request, response) {
     });
     const aiData = await aiResponse.json();
     if (!aiResponse.ok) {
-      throw new Error(aiData.error?.message || `Gemini trả về lỗi ${aiResponse.status}.`);
+      const error = new Error(aiData.error?.message || `Gemini trả về lỗi ${aiResponse.status}.`);
+      error.status = aiResponse.status;
+      const retryAfter = aiData.error?.details?.find((detail) => detail.retryDelay)?.retryDelay;
+      if (aiResponse.status === 429) {
+        error.message = retryAfter
+          ? `Gemini đã hết quota miễn phí. Hãy thử lại sau khoảng ${retryAfter}.`
+          : "Gemini đã hết quota miễn phí. Hãy thử lại sau hoặc kiểm tra gói và billing.";
+        if (retryAfter) response.setHeader("Retry-After", retryAfter.replace("s", ""));
+      }
+      throw error;
     }
     const text = aiData.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("");
     response.setHeader("Cache-Control", "private, max-age=300");
