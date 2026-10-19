@@ -10,11 +10,16 @@ async function request(endpoint, payload) {
     throw new Error("Không thể kết nối máy chủ. Hãy kiểm tra kết nối và thử lại.", { cause: error });
   }
 
+  const contentType = response.headers.get("content-type") || "";
   let data;
   try {
-    data = await response.json();
+    const body = await response.text();
+    data = JSON.parse(body);
   } catch (error) {
-    throw new Error("Máy chủ trả về dữ liệu không hợp lệ.", { cause: error });
+    if (contentType.includes("text/html")) {
+      throw new Error(`Endpoint /api/${endpoint} chưa được Vercel triển khai hoặc đang trả về trang HTML (${response.status}).`, { cause: error });
+    }
+    throw new Error(`Máy chủ trả về dữ liệu không hợp lệ (${response.status}).`, { cause: error });
   }
   if (!response.ok) throw new Error(data.error || `Yêu cầu thất bại (${response.status}).`);
   return data;
