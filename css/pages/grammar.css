@@ -1,0 +1,14 @@
+.tabs { display: flex; gap: 22px; margin: 8px 0 21px; border-bottom: 1px solid var(--line); }
+.tab-button { padding: 12px 2px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); cursor: pointer; font-size: 15px; font-weight: 600; }
+.tab-button.is-active { border-color: var(--green); color: var(--green); }
+.tab-panel { max-width: 850px; }
+.tab-panel > .search-bar { margin-bottom: 20px; }
+.grammar-result { margin-top: 20px; }
+.formula-box { padding: 15px 18px; border-radius: 8px; background: var(--green-soft); color: var(--green); font-family: Georgia, serif; font-size: 19px; }
+.sentence-form { display: grid; gap: 12px; max-width: 720px; }
+.sentence-form label { font-size: 15px; font-weight: 700; }
+.sentence-form textarea { min-height: 120px; resize: vertical; padding: 14px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--surface); }
+.sentence-form .button { justify-self: start; }
+.answer-card { margin-top: 20px; }
+.answer-correct { margin: 8px 0 18px; }
+@media (max-width: 560px) { .tabs { gap: 16px; }.tab-button { font-size: 14px; } }

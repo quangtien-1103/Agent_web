@@ -1,0 +1,50 @@
+.button { min-height: 46px; padding: 0 19px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; border: 0; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 700; transition: transform .2s ease, background .2s ease, opacity .2s ease; }
+.button:hover { transform: translateY(-1px); }
+.button:disabled { cursor: wait; opacity: .7; transform: none; }
+.button-primary { color: white; background: var(--green); }
+.button-primary:hover { background: var(--green-dark); }
+.button-secondary { color: var(--green); border: 1px solid var(--line); background: var(--surface); }
+.text-link { color: var(--green); font-size: 14px; font-weight: 700; }
+.search-bar { min-height: 64px; display: flex; align-items: center; gap: 14px; padding: 9px 10px 9px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); box-shadow: 0 8px 24px rgb(33 57 45 / 3%); }
+.search-bar > span { color: var(--green); font-size: 24px; line-height: 1; }
+.search-bar input, .message-form input { min-width: 0; flex: 1; border: 0; outline: 0; color: var(--ink); background: transparent; }
+.search-bar input::placeholder, .message-form input::placeholder, textarea::placeholder { color: #9aa59f; }
+.empty-card { display: grid; min-height: 300px; place-content: center; justify-items: center; padding: 40px 24px; text-align: center; border: 1px dashed var(--line); border-radius: 12px; background: var(--surface); }
+.empty-card h2 { margin: 18px 0 6px; font-size: 19px; }
+.empty-card p { max-width: 340px; margin: 0; color: var(--muted); font-size: 15px; }
+.empty-illustration { display: grid; width: 68px; height: 68px; place-items: center; border-radius: 24px 24px 24px 8px; color: var(--green); background: var(--green-soft); font-family: Georgia, serif; font-size: 32px; }
+.loading-card { display: flex; align-items: center; gap: 13px; padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--muted); font-size: 15px; }
+.spinner { width: 19px; height: 19px; border: 2px solid var(--line); border-top-color: var(--green); border-radius: 50%; animation: spin .75s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.error-card { padding: 18px 20px; border: 1px solid #e8c4b9; border-radius: 10px; background: color-mix(in srgb, #fff2ed 80%, var(--surface)); color: #874832; font-size: 15px; }
+.toast-region { position: fixed; z-index: 50; right: 22px; bottom: 22px; display: grid; gap: 8px; }
+.toast { max-width: min(360px, calc(100vw - 44px)); padding: 12px 16px; border-radius: 9px; color: white; background: #263c31; box-shadow: var(--shadow); font-size: 15px; animation: toast-in .2s ease-out; }
+@keyframes toast-in { from { transform: translateY(8px); opacity: 0; } }
+.result-card { padding: clamp(22px, 4vw, 34px); border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+.result-card h2 { margin: 0 0 8px; font-size: 21px; }
+.result-card p { color: var(--muted); font-size: 15px; }
+.result-card ul { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 15px; }
+.result-card li + li { margin-top: 6px; }
+.result-section { padding: 18px 0; border-top: 1px solid var(--line); }
+.result-section h3 { margin: 0 0 9px; color: var(--green); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.result-section p:last-child { margin-bottom: 0; }
+.chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 7px 11px; border-radius: 12px; background: var(--green-soft); color: var(--green); font-size: 14px; }
+.collocation-chip { display: grid; gap: 2px; overflow-wrap: anywhere; }
+.collocation-chip strong { font-size: 14px; }
+.collocation-chip span { color: var(--muted); font-size: 13px; }
+.quiz-question { padding: 16px 0; border-top: 1px solid var(--line); }
+.quiz-question p { margin-bottom: 10px; color: var(--ink); }
+.quiz-options { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.quiz-options label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 15px; cursor: pointer; }
+.quiz-feedback { margin-top: 14px; padding: 12px; border-radius: 8px; background: var(--green-soft); color: var(--green); font-size: 15px; }
+.answer-card { padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.answer-card h2 { font-size: 17px; }
+.answer-card .answer-correct { color: var(--green); font-size: 19px; font-weight: 700; }
+.answer-card del { color: #b26e58; }
+
+@media (max-width: 560px) {
+  .search-bar { gap: 8px; padding-left: 12px; }
+  .search-bar .button { min-height: 44px; padding-inline: 12px; gap: 5px; font-size: 14px; }
+  .search-bar input { font-size: 15px; }
+}

@@ -1,0 +1,1 @@
+Create two grammar points for this week using the approved vocabulary. Explain function in Vietnamese, formula, four examples, natural usage, two contrasts, three common Vietnamese-learner mistakes and six practice items per point. Return only the grammar JSON.

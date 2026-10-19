@@ -1,0 +1,1 @@
+Create the vocabulary set for this week. Return about 15 core words and 5 fixed chunks (week 1 may use 8 words and 12 chunks), plus 8-10 extended words and 2-3 confusable pairs. Every core item needs a Vietnamese meaning, natural collocations, two examples with translations and a Vietnamese learner tip. Split core item ids into day1_ids and day2_ids.

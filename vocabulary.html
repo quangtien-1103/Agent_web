@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tra từ tiếng Anh theo ngữ cảnh và xây dựng sổ từ cá nhân.">
+    <title>Từ vựng — English Web</title>
+    <link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/pages/vocabulary.css">
+    <script type="module" src="js/pages/vocabulary.js"></script>
+  </head>
+  <body><div data-navbar></div><main class="container page-shell">
+    <header class="page-heading"><span class="eyebrow">WORD GARDEN · 01</span><h1>Mỗi từ mới,<br><span>một thế giới mới.</span></h1><p>Tra từ và học cách dùng từ ấy thật tự nhiên trong từng ngữ cảnh.</p></header>
+    <form class="search-bar" id="word-search"><label class="sr-only" for="word-input">Từ vựng</label><span aria-hidden="true">⌕</span><input id="word-input" name="word" placeholder="Nhập một từ tiếng Anh, ví dụ: reliable" required><button class="button button-primary" type="submit">Tra từ <span aria-hidden="true">→</span></button></form>
+    <div class="vocabulary-layout"><section id="word-result" class="result-column" aria-live="polite"><div class="empty-card"><span class="empty-illustration">Aa</span><h2>Từ đầu tiên đang chờ bạn</h2><p>Nhập một từ tiếng Anh phía trên để xem nghĩa, phát âm và ví dụ.</p></div></section>
+      <aside class="wordbook-panel"><div class="section-heading"><div><span class="eyebrow">YOUR COLLECTION</span><h2>Sổ từ của tôi</h2></div><span class="book-count" id="saved-count">0</span></div><div id="saved-words" class="saved-list"></div><button class="button button-secondary review-button" id="review-button" type="button">Ôn tập ngay <span aria-hidden="true">→</span></button><p class="review-caption" id="review-caption">Từ đã lưu sẽ được nhắc ôn sau.</p></aside>
+    </div>
+  </main><div data-footer></div></body>
+</html>

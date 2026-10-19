@@ -1,0 +1,20 @@
+.vocabulary-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; align-items: start; margin-top: 24px; }
+.result-column { min-width: 0; }
+.wordbook-panel { position: sticky; top: 98px; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.book-count { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: var(--green-soft); color: var(--green); font-size: 12px; font-weight: 700; }
+.saved-list { display: grid; gap: 4px; max-height: 340px; overflow-y: auto; margin: 18px 0; }
+.saved-word { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+.saved-word button:first-child { padding: 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; text-align: left; font-family: Georgia, serif; font-size: 15px; font-weight: 700; }
+.saved-word small { display: block; color: var(--muted); font-family: "DM Sans", sans-serif; font-size: 12px; font-weight: 400; }
+.remove-word { border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 18px; }
+.review-button { width: 100%; }
+.review-caption { margin: 10px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
+.word-title-row { display: flex; align-items: center; gap: 12px; }
+.word-pronunciation { margin: 0 !important; color: var(--muted); }
+.audio-button { flex: 0 0 auto; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--green); cursor: pointer; }
+.word-type { display: inline-block; margin-bottom: 11px; color: var(--green); font-size: 14px; font-style: italic; }
+.definition { color: var(--ink) !important; font-size: 17px !important; }
+.word-actions { display: flex; gap: 9px; margin-top: 18px; }
+.word-actions .button { flex: 1; }
+.saved-empty { margin: 22px 0; color: var(--muted); font-size: 14px; }
+@media (max-width: 800px) { .vocabulary-layout { grid-template-columns: 1fr; }.wordbook-panel { position: static; }.saved-list { max-height: 230px; } }

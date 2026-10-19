@@ -1,0 +1,1 @@
+{"week":0,"topic":"","level":"","core_words":[],"chunks":[],"extended_words":[],"confusables":[],"day1_ids":[],"day2_ids":[],"notes":""}

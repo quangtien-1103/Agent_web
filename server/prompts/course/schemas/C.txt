@@ -1,0 +1,1 @@
+{"week":0,"main":{"id":"","title":"","text_type":"","paragraphs":[],"word_count":0,"vocab_used_ids":[],"glossary":[],"questions":[],"skill_tip_vi":""},"bonus":{"id":"","title":"","text_type":"","paragraphs":[],"word_count":0,"vocab_used_ids":[],"questions":[]},"notes":""}

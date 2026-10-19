@@ -1,0 +1,349 @@
+{
+  "content_version": "1.0.0",
+  "last_reviewed": "2026-10-19",
+  "week": 1,
+  "topic": "Everyday Conversations",
+  "topic_vi": "Giao tiếp hằng ngày",
+  "level": "A1",
+  "goals_vi": [
+    "Chào hỏi và giới thiệu bản thân",
+    "Hỏi và trả lời về tên, quê quán, sức khỏe ('How are you?')",
+    "Dùng các từ lịch sự: please, thank you, sorry, excuse me",
+    "Dùng đúng 'be' và các đại từ cơ bản"
+  ],
+  "vocabulary": {
+    "core_words": [
+      {
+        "id": "w01.v01", "word": "name", "pos": "noun", "ipa": "/neɪm/",
+        "meaning_vi": "tên",
+        "collocations": ["first name", "last name", "your name"],
+        "register": "neutral",
+        "examples": [
+          {"en": "Please write your name here.", "vi": "Vui lòng viết tên của bạn ở đây."},
+          {"en": "Her name is Anna.", "vi": "Tên cô ấy là Anna."}
+        ],
+        "vn_tip": "Âm /eɪ/ là hai âm nối nhau (nê-ì), kéo dài hơn tiếng Việt 'nêm'. Đừng bỏ âm /m/ cuối."
+      },
+      {
+        "id": "w01.v02", "word": "friend", "pos": "noun", "ipa": "/frend/",
+        "meaning_vi": "bạn bè",
+        "collocations": ["a good friend", "best friend", "make friends"],
+        "register": "neutral",
+        "examples": [
+          {"en": "This is my friend, Tom.", "vi": "Đây là bạn tôi, Tom."},
+          {"en": "She is a good friend.", "vi": "Cô ấy là một người bạn tốt."}
+        ],
+        "vn_tip": "Phát âm cụm phụ âm /fr/ rõ ràng và giữ âm cuối /nd/. Số nhiều 'friends' đọc /frendz/.",
+        "forms": ["friends"]
+      },
+      {
+        "id": "w01.v03", "word": "meet", "pos": "verb", "ipa": "/miːt/",
+        "meaning_vi": "gặp, làm quen",
+        "collocations": ["meet someone", "meet at the café", "nice to meet you"],
+        "register": "neutral",
+        "examples": [
+          {"en": "I meet my friends on Sundays.", "vi": "Tôi gặp bạn bè vào các ngày Chủ nhật."},
+          {"en": "Let's meet at the café.", "vi": "Mình gặp nhau ở quán cà phê nhé."}
+        ],
+        "vn_tip": "Nguyên âm /iː/ dài, đừng đọc ngắn thành 'mit'. 'meet' (gặp) và 'meat' (thịt) đọc giống nhau.",
+        "forms": ["meets", "met", "meeting"]
+      },
+      {
+        "id": "w01.v04", "word": "from", "pos": "preposition", "ipa": "/frʌm/",
+        "meaning_vi": "từ, đến từ",
+        "collocations": ["be from + place", "come from", "from ... to ..."],
+        "register": "neutral",
+        "examples": [
+          {"en": "I'm from Vietnam.", "vi": "Tôi đến từ Việt Nam."},
+          {"en": "Where is she from?", "vi": "Cô ấy đến từ đâu?"}
+        ],
+        "vn_tip": "Trong câu nói nhanh, 'from' thường đọc nhẹ /frəm/. Nhưng ở cuối câu hỏi 'Where are you from?' thì được nhấn mạnh."
+      },
+      {
+        "id": "w01.v05", "word": "help", "pos": "verb/noun", "ipa": "/help/",
+        "meaning_vi": "giúp đỡ; sự giúp đỡ",
+        "collocations": ["help someone", "ask for help", "need help"],
+        "register": "neutral",
+        "examples": [
+          {"en": "Can you help me, please?", "vi": "Bạn giúp tôi được không?"},
+          {"en": "I need help with this form.", "vi": "Tôi cần giúp đỡ về mẫu đơn này."}
+        ],
+        "vn_tip": "Đừng bỏ âm cuối /p/: khép môi lại ở cuối từ.",
+        "forms": ["helps", "helped", "helping"]
+      },
+      {
+        "id": "w01.v06", "word": "sorry", "pos": "adjective", "ipa": "/ˈsɑːri/",
+        "meaning_vi": "xin lỗi; tiếc",
+        "collocations": ["I'm sorry", "sorry for being late", "say sorry"],
+        "register": "neutral",
+        "examples": [
+          {"en": "Sorry, I'm late.", "vi": "Xin lỗi, tôi đến muộn."},
+          {"en": "I'm sorry, I don't understand.", "vi": "Xin lỗi, tôi không hiểu."}
+        ],
+        "vn_tip": "Nhấn âm đầu 'SOR-ry'. Đừng đọc hai âm đều nhau như 'sô-ri'."
+      },
+      {
+        "id": "w01.v07", "word": "please", "pos": "adverb", "ipa": "/pliːz/",
+        "meaning_vi": "làm ơn, xin vui lòng",
+        "collocations": ["Yes, please.", "please sit down", "please wait"],
+        "register": "neutral",
+        "examples": [
+          {"en": "A glass of water, please.", "vi": "Cho tôi một cốc nước."},
+          {"en": "Please sit here.", "vi": "Mời bạn ngồi ở đây."}
+        ],
+        "vn_tip": "Kết thúc bằng âm /z/ (có rung), không phải /s/."
+      },
+      {
+        "id": "w01.v08", "word": "fine", "pos": "adjective", "ipa": "/faɪn/",
+        "meaning_vi": "ổn, khỏe",
+        "collocations": ["I'm fine", "a fine day", "That's fine."],
+        "register": "neutral",
+        "examples": [
+          {"en": "I'm fine, thanks.", "vi": "Tôi khỏe, cảm ơn."},
+          {"en": "Is Tuesday OK? Yes, that's fine.", "vi": "Thứ Ba được không? Được, ổn."}
+        ],
+        "vn_tip": "Âm /aɪ/ là hai âm nối (a-i). Chú ý 'fine' /faɪn/ khác 'find' /faɪnd/."
+      }
+    ],
+    "chunks": [
+      {"id": "w01.c01", "phrase": "Nice to meet you.", "meaning_vi": "Rất vui được gặp bạn.", "when_to_use_vi": "Khi gặp ai đó lần đầu, thường kèm bắt tay hoặc mỉm cười.", "example_reply": "Nice to meet you, too."},
+      {"id": "w01.c02", "phrase": "What's your name?", "meaning_vi": "Bạn tên là gì?", "when_to_use_vi": "Hỏi tên người mới gặp. Trang trọng hơn: 'May I ask your name?'.", "example_reply": "My name is Linh."},
+      {"id": "w01.c03", "phrase": "My name is ...", "meaning_vi": "Tên tôi là ...", "when_to_use_vi": "Giới thiệu bản thân. Có thể nói ngắn hơn: 'I'm ...'.", "example_reply": "Nice to meet you, Linh."},
+      {"id": "w01.c04", "phrase": "Where are you from?", "meaning_vi": "Bạn đến từ đâu?", "when_to_use_vi": "Hỏi quê quán hoặc quốc gia; nhấn mạnh từ 'from' ở cuối câu.", "example_reply": "I'm from Vietnam."},
+      {"id": "w01.c05", "phrase": "How are you?", "meaning_vi": "Bạn khỏe không?", "when_to_use_vi": "Là câu chào, không phải câu hỏi thật về sức khỏe; trả lời ngắn gọn.", "example_reply": "I'm good, thanks. And you?"},
+      {"id": "w01.c06", "phrase": "I'm fine, thank you. And you?", "meaning_vi": "Tôi khỏe, cảm ơn. Còn bạn?", "when_to_use_vi": "Cách trả lời lịch sự cho 'How are you?'. Nên hỏi lại 'And you?'.", "example_reply": "I'm fine, too."},
+      {"id": "w01.c07", "phrase": "You're welcome.", "meaning_vi": "Không có gì.", "when_to_use_vi": "Đáp lại lời cảm ơn 'Thank you'.", "example_reply": "Thank you very much."},
+      {"id": "w01.c08", "phrase": "Excuse me.", "meaning_vi": "Xin lỗi (để gọi ai đó hoặc xin đi qua).", "when_to_use_vi": "Dùng trước khi làm phiền: gọi nhân viên, xin hỏi đường, xin đi qua.", "example_reply": "Yes? How can I help?"},
+      {"id": "w01.c09", "phrase": "Pardon?", "meaning_vi": "Xin lỗi, bạn nói gì ạ?", "when_to_use_vi": "Khi nghe chưa rõ và muốn người kia nhắc lại. Thân mật hơn: 'Sorry?'.", "example_reply": "I said, 'What's your name?'"},
+      {"id": "w01.c10", "phrase": "No problem.", "meaning_vi": "Không sao đâu.", "when_to_use_vi": "Đáp lại lời cảm ơn hoặc lời xin lỗi một cách thân thiện.", "example_reply": "Sorry I'm late."},
+      {"id": "w01.c11", "phrase": "Can I help you?", "meaning_vi": "Tôi có thể giúp gì cho bạn?", "when_to_use_vi": "Nhân viên cửa hàng, lễ tân nói với khách.", "example_reply": "Yes, please. I need a map."},
+      {"id": "w01.c12", "phrase": "See you later.", "meaning_vi": "Hẹn gặp lại nhé.", "when_to_use_vi": "Chào tạm biệt thân mật khi sẽ gặp lại sớm.", "example_reply": "See you! Have a good day."}
+    ],
+    "extended_words": [
+      {"word": "Good morning", "pos": "phrase", "meaning_vi": "Chào buổi sáng", "example_en": "Good morning, everyone!"},
+      {"word": "Good evening", "pos": "phrase", "meaning_vi": "Chào buổi tối", "example_en": "Good evening. A table for two, please."},
+      {"word": "Goodbye", "pos": "phrase", "meaning_vi": "Tạm biệt", "example_en": "Goodbye! See you tomorrow."},
+      {"word": "Have a good day", "pos": "phrase", "meaning_vi": "Chúc một ngày tốt lành", "example_en": "Thanks for your help. Have a good day!"},
+      {"word": "It's a pleasure to meet you", "pos": "phrase", "meaning_vi": "Rất hân hạnh được gặp bạn (trang trọng)", "example_en": "It's a pleasure to meet you, Mr. Brown."},
+      {"word": "My pleasure", "pos": "phrase", "meaning_vi": "Rất vui được giúp (đáp lại lời cảm ơn)", "example_en": "Thanks for your help. — My pleasure."},
+      {"word": "It's all right", "pos": "phrase", "meaning_vi": "Không sao đâu", "example_en": "Sorry! — It's all right."},
+      {"word": "Pardon me", "pos": "phrase", "meaning_vi": "Xin lỗi (trang trọng, khi làm phiền hoặc không nghe rõ)", "example_en": "Pardon me, is this seat free?"}
+    ],
+    "confusables": [
+      {"pair": ["Excuse me", "Sorry"], "difference_vi": "'Excuse me' dùng TRƯỚC khi làm phiền (gọi ai, xin đi qua). 'Sorry' dùng SAU khi đã làm phiền hoặc làm sai (va vào người, đến muộn)."},
+      {"pair": ["fine", "good"], "difference_vi": "'I'm fine' lịch sự, trung tính. 'I'm good' thân mật hơn. Cả hai đều là cách trả lời ngắn cho 'How are you?'."}
+    ],
+    "day1_ids": ["w01.v01", "w01.v02", "w01.v03", "w01.v04", "w01.v05", "w01.v06", "w01.v07", "w01.v08", "w01.c01", "w01.c02"],
+    "day2_ids": ["w01.c03", "w01.c04", "w01.c05", "w01.c06", "w01.c07", "w01.c08", "w01.c09", "w01.c10", "w01.c11", "w01.c12"]
+  },
+  "grammar": {
+    "points": [
+      {
+        "id": "w01.g1", "name": "'Be' (am/is/are) and present simple", "level": "A1",
+        "function_vi": "Dùng 'be' để nói bạn là ai, đến từ đâu, cảm thấy thế nào: 'I am Linh', 'She is from Hue', 'I am fine'. Dùng present simple (thì hiện tại đơn) cho sự thật và thói quen: nơi bạn sống, bạn thích gì: 'I live in Hanoi', 'I like coffee'. Khác tiếng Việt, tiếng Anh luôn cần 'be' trước tính từ: 'I am fine', không nói 'I fine'.",
+        "formula": "I am / you are / he, she, it is / we, they are. Phủ định: am/is/are + not. Câu hỏi: Am/Is/Are + chủ ngữ? Present simple: I/you/we/they + V; he/she/it + V-s. Phủ định: don't/doesn't + V. Câu hỏi: Do/Does + chủ ngữ + V?",
+        "examples": [
+          {"situation": "introducing yourself", "en": "I'm Linh. I'm from Vietnam.", "vi": "Tôi là Linh. Tôi đến từ Việt Nam."},
+          {"situation": "asking about someone", "en": "Are you a student? Yes, I am.", "vi": "Bạn là sinh viên à? Vâng, đúng vậy."},
+          {"situation": "where you live", "en": "She lives in Hanoi. She doesn't live in Hue.", "vi": "Cô ấy sống ở Hà Nội. Cô ấy không sống ở Huế."},
+          {"situation": "asking questions", "en": "Do you speak English? A little.", "vi": "Bạn có nói tiếng Anh không? Một chút."}
+        ],
+        "natural_usage_vi": "Khi nói, người bản xứ thường rút gọn: I'm, you're, he's, she's, it's, we're, they're. Trả lời ngắn: 'Yes, I am.' hoặc 'No, I'm not.' (không nói 'Yes, I'm.'). Với Do you...?: 'Yes, I do.' / 'No, I don't.'",
+        "contrasts": [
+          {"vs": "I am vs I'm", "difference_vi": "Khi nói và nhắn tin dùng dạng rút gọn I'm. Nhưng câu trả lời ngắn khẳng định luôn dùng dạng đầy đủ: 'Yes, I am.'", "example_en": "Are you tired? Yes, I am. / No, I'm not."},
+          {"vs": "be vs other verbs", "difference_vi": "Với 'be' không dùng do/does; với các động từ khác thì dùng do/does.", "example_en": "Are you hungry? / Do you like noodles?"}
+        ],
+        "vn_mistakes": [
+          {"wrong": "I fine.", "right": "I'm fine.", "why_vi": "Tiếng Anh cần động từ 'be' trước tính từ, tiếng Việt thì không."},
+          {"wrong": "She like coffee.", "right": "She likes coffee.", "why_vi": "Với he/she/it ở present simple phải thêm -s vào động từ."},
+          {"wrong": "Do you are a teacher?", "right": "Are you a teacher?", "why_vi": "'Be' tự đảo lên đầu câu hỏi, không cần do/does."}
+        ],
+        "practice": [
+          {"type": "gap_fill", "prompt": "My name ___ Anna. (am / is / are)", "answer": "is", "explanation_vi": "'My name' là số ít nên dùng is."},
+          {"type": "gap_fill", "prompt": "They ___ from Japan. (am / is / are)", "answer": "are", "explanation_vi": "Chủ ngữ 'they' đi với are."},
+          {"type": "gap_fill", "prompt": "He ___ live in Da Nang. He lives in Hue. (doesn't / don't / isn't)", "answer": "doesn't", "explanation_vi": "Với 'he' ở present simple phủ định dùng doesn't + động từ nguyên mẫu."},
+          {"type": "make_sentence", "prompt": "Giới thiệu tên và quê quán của bạn bằng 2 câu.", "model_answer": "I'm Minh. I'm from Hanoi."},
+          {"type": "make_sentence", "prompt": "Hỏi một người bạn mới có phải là sinh viên không, rồi viết câu trả lời ngắn.", "model_answer": "Are you a student? Yes, I am."},
+          {"type": "make_sentence", "prompt": "Nói nơi bạn sống và một thứ bạn không thích.", "model_answer": "I live in Hanoi. I don't like cold weather."}
+        ],
+        "uses_word_ids": ["w01.v04", "w01.v08"]
+      },
+      {
+        "id": "w01.g2", "name": "Pronouns: subject, object and possessive adjectives", "level": "A1",
+        "function_vi": "Đại từ giúp bạn khỏi lặp lại tên người: 'Linh is my friend. She is from Hue. I like her.' Đại từ chủ ngữ (I, you, he, she, it, we, they) đứng trước động từ. Đại từ tân ngữ (me, you, him, her, it, us, them) đứng sau động từ hoặc giới từ. Tính từ sở hữu (my, your, his, her, its, our, their) đứng trước danh từ. Tiếng Anh không có từ theo thứ bậc như anh/chị/em: luôn dùng 'I' và 'you'.",
+        "formula": "Chủ ngữ: I / you / he / she / it / we / they. Tân ngữ: me / you / him / her / it / us / them. Sở hữu: my / your / his / her / its / our / their + danh từ.",
+        "examples": [
+          {"situation": "introducing a friend", "en": "This is my friend. Her name is Mai.", "vi": "Đây là bạn tôi. Tên cô ấy là Mai."},
+          {"situation": "asking for help", "en": "Can you help me, please? Sure, I can help you.", "vi": "Bạn giúp tôi được không? Được, tôi giúp bạn."},
+          {"situation": "meeting a group", "en": "We are from Vietnam. Our teacher is from Canada.", "vi": "Chúng tôi đến từ Việt Nam. Giáo viên của chúng tôi đến từ Canada."},
+          {"situation": "talking about friends", "en": "I meet them on Sundays. I like them.", "vi": "Tôi gặp họ vào các ngày Chủ nhật. Tôi quý họ."}
+        ],
+        "natural_usage_vi": "Khi nói chuyện, dùng 'you' cho mọi người, kể cả người lớn tuổi hay cấp trên; không có từ nào tương đương anh/chị/ông/bà. Khi cần trang trọng thì gọi Mr/Ms + họ. Dùng 'This is...' để giới thiệu người: 'This is my friend, Tom.'",
+        "contrasts": [
+          {"vs": "my vs me", "difference_vi": "'my' đứng trước danh từ (my name); 'me' đứng sau động từ (help me).", "example_en": "My friend helps me."},
+          {"vs": "his vs her", "difference_vi": "Chọn theo người sở hữu, không theo vật được sở hữu: 'his' là của nam, 'her' là của nữ.", "example_en": "Tom likes his car. Anna likes her car."}
+        ],
+        "vn_mistakes": [
+          {"wrong": "Me name is Anna.", "right": "My name is Anna.", "why_vi": "Trước danh từ dùng tính từ sở hữu 'my', không dùng 'me'."},
+          {"wrong": "I like she.", "right": "I like her.", "why_vi": "Sau động từ dùng đại từ tân ngữ 'her'."},
+          {"wrong": "Him is from Japan.", "right": "He is from Japan.", "why_vi": "Làm chủ ngữ phải dùng 'he', không dùng 'him'."}
+        ],
+        "practice": [
+          {"type": "gap_fill", "prompt": "Hello! ___ name is Mai. (I / My / Me)", "answer": "My", "explanation_vi": "Trước danh từ 'name' dùng tính từ sở hữu my."},
+          {"type": "gap_fill", "prompt": "This is Tom. ___ is from Canada. (He / Him / His)", "answer": "He", "explanation_vi": "Làm chủ ngữ của câu nên dùng he."},
+          {"type": "gap_fill", "prompt": "Can you help ___? I need a map. (I / my / me)", "answer": "me", "explanation_vi": "Sau động từ 'help' dùng đại từ tân ngữ me."},
+          {"type": "make_sentence", "prompt": "Viết 2 câu giới thiệu một người bạn (tên, đến từ đâu), dùng he hoặc she.", "model_answer": "This is my friend Hung. He is from Da Nang."},
+          {"type": "make_sentence", "prompt": "Hỏi bạn mới hai câu có dùng 'your' hoặc 'you'.", "model_answer": "What's your name? Where are you from?"},
+          {"type": "make_sentence", "prompt": "Nói bạn gặp bạn bè của mình vào cuối tuần, dùng 'them'.", "model_answer": "I meet them at the weekend."}
+        ],
+        "uses_word_ids": ["w01.v02", "w01.v05"]
+      }
+    ]
+  },
+  "reading": {
+    "main": {
+      "id": "w01.r1", "title": "A message to a new classmate", "text_type": "chat message",
+      "paragraphs": [
+        "Hi Linh! My name is Anna. Nice to meet you! I'm in your English class.",
+        "I'm from Canada, but I live in Hanoi now. Where are you from? Are you from Hanoi too?",
+        "How are you today? I'm fine, thank you. I'm a little nervous because I don't know many people here. Can you help me, please? I need the room number for class. Sorry for my many questions!",
+        "Maybe we can meet at the café after class. My friend Tom is there too. See you later! Anna"
+      ],
+      "glossary": [
+        {"word": "nervous", "meaning_vi": "lo lắng, hồi hộp"},
+        {"word": "classmate", "meaning_vi": "bạn cùng lớp"},
+        {"word": "maybe", "meaning_vi": "có lẽ, có thể"},
+        {"word": "café", "meaning_vi": "quán cà phê"}
+      ],
+      "questions": [
+        {"id": "w01.r1.q1", "kind": "detail", "question": "Where does Anna live now?", "options": ["In Canada", "In Hanoi", "In a café"], "answer_index": 1, "explanation_vi": "Anna viết 'I live in Hanoi now.'"},
+        {"id": "w01.r1.q2", "kind": "detail", "question": "Who is Tom?", "options": ["Anna's teacher", "Anna's friend", "Linh's brother"], "answer_index": 1, "explanation_vi": "Anna viết 'My friend Tom is there too.'"},
+        {"id": "w01.r1.q3", "kind": "detail", "question": "What does Anna need?", "options": ["A café", "The room number for class", "A new name"], "answer_index": 1, "explanation_vi": "Anna viết 'I need the room number for class.'"},
+        {"id": "w01.r1.q4", "kind": "inference", "question": "Why does Anna write to Linh?", "options": ["She wants a new friend and some help", "She wants to sell something", "She is leaving Hanoi"], "answer_index": 0, "explanation_vi": "Anna tự giới thiệu, hỏi quê quán, nhờ giúp đỡ và hẹn gặp."},
+        {"id": "w01.r1.q5", "kind": "vocab_in_context", "question": "Why does Anna say 'Sorry for my many questions!'?", "options": ["She did something bad", "She thinks she is asking a lot", "She can't speak English"], "answer_index": 1, "explanation_vi": "Anna hỏi nhiều câu nên xin lỗi một cách lịch sự."},
+        {"id": "w01.r1.q6", "kind": "true_false_ng", "statement": "Anna is from Hanoi.", "answer": "false", "explanation_vi": "Anna đến từ Canada, chỉ đang sống ở Hà Nội."},
+        {"id": "w01.r1.q7", "kind": "true_false_ng", "statement": "Anna is in Linh's English class.", "answer": "true", "explanation_vi": "Anna viết 'I'm in your English class.'"},
+        {"id": "w01.r1.q8", "kind": "true_false_ng", "statement": "Linh is from Canada.", "answer": "not_given", "explanation_vi": "Bài không nói Linh đến từ đâu."}
+      ],
+      "skill_tip_vi": "Đọc lướt (skimming): đọc câu đầu mỗi đoạn để biết ai viết cho ai và để làm gì, rồi mới đọc kỹ các chi tiết."
+    },
+    "bonus": {
+      "id": "w01.r2", "title": "Welcome to English Class!", "text_type": "notice",
+      "paragraphs": [
+        "WELCOME to English Class A1! Teacher: Ms. Green. Room 12. Monday and Wednesday, 8:30.",
+        "Please say your name and where you are from. Please help your new friends.",
+        "Late? Say 'Sorry' and sit down quietly. Need help? Say 'Excuse me' and ask the teacher. No problem, we are here to help you!",
+        "Name badge: My name is ______. I'm from ______."
+      ],
+      "questions": [
+        {"id": "w01.r2.q1", "kind": "detail", "question": "What time does the class start?", "options": ["8:00", "8:30", "9:30"], "answer_index": 1, "explanation_vi": "Thông báo ghi 'Monday and Wednesday, 8:30.'"},
+        {"id": "w01.r2.q2", "kind": "detail", "question": "What should you say when you are late?", "options": ["Please", "Sorry", "Goodbye"], "answer_index": 1, "explanation_vi": "Thông báo ghi 'Late? Say Sorry and sit down quietly.'"}
+      ]
+    }
+  },
+  "listening": {
+    "scripts": [
+      {
+        "id": "w01.l1", "title": "Meeting a new friend", "situation": "Two students meet for the first time (slow speed).",
+        "speakers": [
+          {"id": "A", "gender": "female", "role": "student (Mai)"},
+          {"id": "B", "gender": "male", "role": "student (Ben)"}
+        ],
+        "lines": [
+          {"n": 1, "speaker": "A", "text": "Hello! I'm Mai. What's your name?"},
+          {"n": 2, "speaker": "B", "text": "Hi, Mai. My name is Ben. Nice to meet you."},
+          {"n": 3, "speaker": "A", "text": "Nice to meet you, too. Where are you from, Ben?"},
+          {"n": 4, "speaker": "B", "text": "I'm from Sydney, in Australia."},
+          {"n": 5, "speaker": "A", "text": "Pardon? Sydney?"},
+          {"n": 6, "speaker": "B", "text": "Yes, Sydney. And you? Where are you from?"},
+          {"n": 7, "speaker": "A", "text": "I'm from Vietnam. How are you today?"},
+          {"n": 8, "speaker": "B", "text": "I'm fine, thank you. And you?"},
+          {"n": 9, "speaker": "A", "text": "I'm fine, too. Oh, this is my friend, Lan."},
+          {"n": 10, "speaker": "B", "text": "Hello, Lan. Nice to meet you."}
+        ],
+        "connected_speech_notes": [
+          {"written": "What's your name?", "spoken": "Whatcha name?", "explanation_vi": "'What's your' nối thành /ˈwʌtʃər/, nghe như 'whatcha'."},
+          {"written": "Where are you from?", "spoken": "Where ya from?", "explanation_vi": "'are you' nối nhanh nghe như 'ya'; từ 'from' được nhấn mạnh ở cuối câu."},
+          {"written": "Nice to meet you", "spoken": "Nice-ta meetcha", "explanation_vi": "'to' đọc nhẹ /tə/, còn /t/ + /j/ trong 'meet you' nối thành /tʃ/ nghe như 'meetcha'."}
+        ],
+        "tasks": {
+          "gist": {"question": "What is the dialogue about?", "options": ["Two people meet for the first time", "Two people buy food", "Two people say goodbye at an airport"], "answer_index": 0},
+          "details": [
+            {"id": "w01.l1.q1", "question": "What is the girl's name?", "options": ["Mai", "Lan", "Ben"], "answer_index": 0, "evidence_line": 1},
+            {"id": "w01.l1.q2", "question": "Where is Ben from?", "options": ["Vietnam", "Sydney, Australia", "Da Nang"], "answer_index": 1, "evidence_line": 4},
+            {"id": "w01.l1.q3", "question": "Why does Mai say 'Pardon?'", "options": ["She is angry", "She didn't hear 'Sydney' clearly", "She doesn't know Ben"], "answer_index": 1, "evidence_line": 5},
+            {"id": "w01.l1.q4", "question": "Who is Lan?", "options": ["Ben's teacher", "Mai's friend", "Mai's sister"], "answer_index": 1, "evidence_line": 9}
+          ],
+          "dictation": [{"line": 2}, {"line": 3}, {"line": 8}],
+          "gap_fill": {"from_line": 7, "to_line": 10, "blanks": ["from", "today", "fine", "thank", "too", "friend"]},
+          "shadowing_lines": [1, 2, 6, 8]
+        }
+      },
+      {
+        "id": "w01.l2", "title": "At the hotel reception", "situation": "A guest arrives at a hotel and talks to the receptionist.",
+        "speakers": [
+          {"id": "A", "gender": "female", "role": "receptionist"},
+          {"id": "B", "gender": "male", "role": "guest (Mr. Brown)"}
+        ],
+        "lines": [
+          {"n": 1, "speaker": "A", "text": "Good morning. Can I help you?"},
+          {"n": 2, "speaker": "B", "text": "Yes, please. My name is David Brown. I have a room."},
+          {"n": 3, "speaker": "A", "text": "Welcome, Mr. Brown. Your room is number 12. Here is your key.", "tts_text": "Welcome, Mr. Brown. Your room is number twelve. Here is your key."},
+          {"n": 4, "speaker": "B", "text": "Sorry? Is that twelve or two?"},
+          {"n": 5, "speaker": "A", "text": "Twelve. One, two. It's on the first floor."},
+          {"n": 6, "speaker": "B", "text": "Thank you very much."},
+          {"n": 7, "speaker": "A", "text": "You're welcome. Do you need any help with your bag?"},
+          {"n": 8, "speaker": "B", "text": "No, thanks. I'm fine. Excuse me, where is the café?"},
+          {"n": 9, "speaker": "A", "text": "It's over there, next to the door."},
+          {"n": 10, "speaker": "B", "text": "Great. Thanks! See you later."},
+          {"n": 11, "speaker": "A", "text": "No problem. Have a good day."}
+        ],
+        "connected_speech_notes": [
+          {"written": "Can I help you?", "spoken": "Kin I help ya?", "explanation_vi": "'Can' đọc nhẹ /kən/ và 'you' đọc nhẹ /jə/ trong câu hỏi nhanh."},
+          {"written": "Thank you very much", "spoken": "Thank-ya very much", "explanation_vi": "'Thank you' thường nối nhanh nghe như 'thank-ya'."},
+          {"written": "See you later", "spoken": "See ya later", "explanation_vi": "'you' đọc yếu thành 'ya' trong lời chào tạm biệt thân mật."}
+        ],
+        "tasks": {
+          "gist": {"question": "Where does this conversation happen?", "options": ["At a hotel", "At a school", "At a bus station"], "answer_index": 0},
+          "details": [
+            {"id": "w01.l2.q1", "question": "What is the guest's name?", "options": ["David Green", "David Brown", "Daniel Brown"], "answer_index": 1, "evidence_line": 2},
+            {"id": "w01.l2.q2", "question": "What is the room number?", "options": ["2", "12", "22"], "answer_index": 1, "evidence_line": 3},
+            {"id": "w01.l2.q3", "question": "What does the guest ask about?", "options": ["The café", "The bus", "The key"], "answer_index": 0, "evidence_line": 8},
+            {"id": "w01.l2.q4", "question": "Does the guest need help with his bag?", "options": ["Yes, he does", "No, he doesn't", "The receptionist doesn't ask"], "answer_index": 1, "evidence_line": 8}
+          ],
+          "dictation": [{"line": 1}, {"line": 4}, {"line": 10}],
+          "gap_fill": {"from_line": 7, "to_line": 11, "blanks": ["welcome", "help", "fine", "Excuse", "later", "problem"]},
+          "shadowing_lines": [1, 3, 7, 11]
+        }
+      }
+    ],
+    "background_listening_tip_vi": "Bật lại hai bài nghe khi đi xe, tắm hoặc làm việc nhà. Không cần hiểu hết: mỗi lần nghe lại, tai bạn sẽ bắt âm tốt hơn."
+  },
+  "quiz": {
+    "mini_test": [
+      {"id": "w01.q01", "skill": "vocabulary", "refers_to": "w01.v03", "question": "Nice to ___ you.", "options": ["meet", "meat", "make"], "answer_index": 0, "explanation_vi": "'Nice to meet you' là câu chào khi gặp lần đầu."},
+      {"id": "w01.q02", "skill": "vocabulary", "refers_to": "w01.v08", "question": "A: How are you? B: I'm ___, thank you.", "options": ["fine", "name", "from"], "answer_index": 0, "explanation_vi": "'I'm fine' là câu trả lời quen thuộc cho 'How are you?'."},
+      {"id": "w01.q03", "skill": "vocabulary", "refers_to": "w01.v05", "question": "Which sentence asks for help?", "options": ["Can you help me, please?", "Where are you from?", "What's your name?"], "answer_index": 0, "explanation_vi": "'Can you help me, please?' là lời nhờ giúp đỡ."},
+      {"id": "w01.q04", "skill": "vocabulary", "refers_to": "w01.c09", "question": "You didn't hear the answer. You say:", "options": ["Pardon?", "You're welcome.", "See you later."], "answer_index": 0, "explanation_vi": "'Pardon?' dùng khi muốn người kia nhắc lại."},
+      {"id": "w01.q05", "skill": "grammar", "refers_to": "w01.g1", "question": "She ___ from Japan.", "options": ["am", "is", "are"], "answer_index": 1, "explanation_vi": "Với she dùng is."},
+      {"id": "w01.q06", "skill": "grammar", "refers_to": "w01.g1", "question": "Which sentence is correct?", "options": ["He like tea.", "He likes tea.", "He do like tea."], "answer_index": 1, "explanation_vi": "Với he/she/it ở present simple thêm -s."},
+      {"id": "w01.q07", "skill": "grammar", "refers_to": "w01.g2", "question": "This is my friend. ___ name is Tom.", "options": ["His", "He", "Him"], "answer_index": 0, "explanation_vi": "Trước danh từ 'name' dùng tính từ sở hữu 'his'."},
+      {"id": "w01.q08", "skill": "reading", "refers_to": "w01.r1", "question": "What does Anna ask Linh to do after class?", "options": ["Meet at the café", "Go to Canada", "Call Tom"], "answer_index": 0, "explanation_vi": "Anna viết 'Maybe we can meet at the café after class.'"},
+      {"id": "w01.q09", "skill": "reading", "refers_to": "w01.r2", "question": "Which room is the class in?", "options": ["Room 8", "Room 12", "Room 30"], "answer_index": 1, "explanation_vi": "Thông báo ghi 'Room 12'."},
+      {"id": "w01.q10", "skill": "listening", "script_id": "w01.l1", "play_lines": [5, 6], "question": "Why does Ben say 'Yes, Sydney'?", "options": ["Mai asked again", "Mai said goodbye", "Mai gave her name"], "answer_index": 0, "explanation_vi": "Mai hỏi lại 'Sydney?' nên Ben xác nhận."},
+      {"id": "w01.q11", "skill": "listening", "script_id": "w01.l2", "play_lines": [8, 9], "question": "Where is the café?", "options": ["Next to the door", "On the first floor", "In room 12"], "answer_index": 0, "explanation_vi": "Lễ tân nói 'It's over there, next to the door.'"},
+      {"id": "w01.q12", "skill": "listening", "script_id": "w01.l1", "play_lines": [9, 10], "question": "Who says 'Nice to meet you' to Lan?", "options": ["Ben", "Mai", "The receptionist"], "answer_index": 0, "explanation_vi": "Ben chào Lan ở dòng cuối."}
+    ],
+    "output_task": {
+      "type": "speaking",
+      "prompt_vi": "Nói hoặc viết 6 câu: chào một bạn mới, giới thiệu bản thân, hỏi một câu và chào tạm biệt.",
+      "can_do": [
+        "Tôi có thể chào và giới thiệu tên của mình",
+        "Tôi có thể hỏi bạn mới đến từ đâu",
+        "Tôi có thể kết thúc cuộc trò chuyện một cách lịch sự"
+      ],
+      "model_answer": "Hello! My name is Minh. Nice to meet you. I'm from Hanoi. Where are you from? See you later!"
+    }
+  },
+  "review_queue_ids": []
+}

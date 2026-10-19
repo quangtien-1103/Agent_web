@@ -1,0 +1,191 @@
+chúng ta cso nên làm 1 khóa học trên web này theo 12 chủ đề này thành khóa english 4 phần từ vụng theo chủ để cấu trúc ngữ pháp bài đochs tgheo chủ đè phần nghe theo chủ đề mỗi tuần 1 chủ để không cho ý tưởng ý kiến và thảo luận
+
+Đã thêm vào bộ nhớ english-learning-web.md
+Hướng đó đúng. Với khung 12 chủ đề, giá trị thật của khóa học nằm ở độ sâu của từng chủ đề. Trước khi đào sâu, cần chốt “sâu” nghĩa là gì, để mọi chủ đề được làm theo cùng một khuôn.
+
+1. Mỗi chủ đề chia thành các tình huống nhỏ
+Thay vì một danh sách 20 từ chung chung, mỗi chủ đề nên chia thành 4–6 tình huống thật, rồi từ vựng, ngữ pháp, bài đọc và bài nghe đều xoay quanh các tình huống đó.
+
+Ví dụ chủ đề Food & Dining:
+
+Tình huống	Từ vựng / cụm	Ngữ pháp gắn kèm
+Đặt bàn, gọi món	reservation, I’d like to order...	Modal verbs lịch sự (would, could)
+Mô tả mùi vị	spicy, savory, crispy	Tính từ, trạng từ
+Nhu cầu ăn uống	vegan, allergic to...	Danh từ đếm được/không đếm được
+Thanh toán, tip	the bill, split the bill	Câu hỏi và yêu cầu
+Giới thiệu món Việt cho người nước ngoài	broth, rice noodles, dipping sauce	Mạo từ, mệnh đề quan hệ đơn giản
+Tình huống cuối rất đáng làm: nó dùng được ngay trong đời sống và dễ nhớ, vì là thứ bạn thật sự muốn nói.
+
+2. Khuôn “chiều sâu” cho mỗi chủ đề
+Từ vựng
+
+Chia thành core (15–20 từ phải nhớ) và extended (từ nâng cao, tùy chọn)
+Mỗi từ có: collocation, ngữ cảnh/mức độ trang trọng, họ từ (word family), phát âm kèm lỗi người Việt hay mắc
+Cụm cố định (chunks) như Could I have...? quan trọng hơn từ đơn lẻ
+Nhóm “dễ nhầm”: ví dụ bill và check, fine và good
+Ngữ pháp
+
+2–3 điểm mỗi tuần, gắn với tình huống của chủ đề
+Dạy theo chức năng (khi nào nói, nói gì) chứ không chỉ công thức
+Có mục “Lỗi người Việt hay mắc” (thiếu s, thiếu mạo từ, sai thì...)
+Bài tập ép tạo câu, không chỉ điền chỗ trống
+Reading
+
+2–3 dạng văn bản thật: email, thực đơn, thông báo, bài báo ngắn, hội thoại
+Hai mức độ (dễ và chuẩn) cho cùng một bài
+Luyện kỹ năng: đọc lướt, tìm thông tin, đoán nghĩa từ ngữ cảnh
+Listening
+
+Nhiều dạng: hội thoại ngắn, thông báo, tin nhắn thoại, phỏng vấn
+Dạy hiện tượng nối âm và âm yếu (want to → “wanna”), vì đây là thứ khiến người học nghe không ra
+Chép chính tả (dictation) và điền từ khuyết, rồi đến nhại theo (shadowing)
+Hai tốc độ nghe, bật tắt phụ đề
+Sau mỗi tuần: một nhiệm vụ đầu ra ngắn (viết 5 câu hoặc nói 1 phút) và mini test.
+
+3. Quy trình làm một chủ đề
+Topic brief: bạn và mình thống nhất tình huống, mục tiêu, trình độ cho chủ đề đó
+Sinh nội dung bằng AI theo khuôn ở trên, lưu thành file week-XX.json
+Kiểm tra thủ công bằng một danh sách: có từ nào sai nghĩa, ví dụ nào không tự nhiên, bài đọc có chứa đủ từ của tuần không, bài nghe có quá khó không
+Chạy thử trên web và tự làm thử như một người học
+Điều chỉnh rồi chốt chủ đề
+Bước 3 là bước nâng chất lượng, vì AI có thể bịa collocation nghe hợp lý nhưng sai.
+
+4. Gợi ý thứ tự đào sâu
+Mình đề xuất bắt đầu bằng một chủ đề thí điểm để dựng khuôn, rồi nhân ra 11 chủ đề còn lại. Hai lựa chọn hợp lý:
+
+Tuần 1 (Everyday Conversations): đơn giản nhất, kiểm tra nhanh toàn bộ quy trình.
+Tuần 4 (Food & Dining): phong phú tình huống, hợp để thử khuôn “chia tình huống” ở trên.
+Bạn muốn bắt đầu đào sâu chủ đề nào trước? Mình sẽ lập topic brief cho chủ đề đó, gồm các tình huống, từ vựng core/extended, điểm ngữ pháp, dạng bài đọc và bài nghe, để bạn duyệt trước khi tạo nội dung chính thức.
+
+mỗi chủ để chúng ta sẽ có tiến trình hcoj từng tuần và từ vựng cốt lõi không quá nhiều không quá ít bạn nghĩ câu trả lời có ptomt như nào sẽ là chuẩn nhất có phần từ vựng , phần ngũ pháp, đọc và nghe cho mỗi chủ đề mỗi chủ đề là 1 tuần có tiến trình theo ngày để dễ quan sát hãy góp ý và cải thiện thêm
+
+Đã thêm vào bộ nhớ english-learning-web.md
+Mình chia câu trả lời thành 4 phần: số từ cốt lõi, tiến trình theo ngày, prompt chuẩn, và các góp ý cải thiện.
+
+1. Bao nhiêu từ cốt lõi là vừa
+Đề xuất: 20 mục học mỗi tuần, gồm 15 từ cốt lõi + 5 cụm cố định (chunks), và thêm 10 từ mở rộng tùy chọn.
+
+Lý do (đây là quy tắc thực hành mình đưa ra, không phải con số cứng từ nghiên cứu):
+
+Dưới khoảng 12 mục thì cả tuần không có đủ chất liệu để nghe và đọc lặp lại.
+Trên khoảng 25 mục thì không kịp nhắc lại đủ lần, nên tuần sau quên.
+20 mục chia 2 ngày là 10 mục mỗi ngày, vừa sức trong một buổi học 30–40 phút.
+Cụm cố định (Could I have...?, How much is it?) đáng giá hơn từ đơn, vì dùng ngay được trong câu.
+Từ mở rộng chỉ để người học muốn học thêm, không tính vào tiến độ.
+Tiêu chí chọn từ cốt lõi theo thứ tự ưu tiên: thường gặp, dùng được trong tình huống thật, dễ ghép câu. Những từ như barometric pressure trong lộ trình PDF nên chuyển xuống phần mở rộng.
+
+2. Tiến trình một tuần theo ngày
+Mỗi ngày khoảng 60–90 phút, chia 2 buổi, đúng tinh thần PDF.
+
+Ngày	Trọng tâm	Việc làm	Hoàn thành khi
+1	Từ vựng phần 1	Học 10 mục đầu, nghe phát âm và nhại theo, đặt 3 câu	Đánh dấu 10 mục đã học
+2	Từ vựng phần 2	Học 10 mục còn lại, ôn lại ngày 1, đọc mini-dialogue dùng các từ	Quiz nhanh ≥ 70%
+3	Ngữ pháp 1	Học điểm ngữ pháp 1 qua tình huống, làm bài tạo câu	Hoàn thành 5 câu
+4	Reading	Đọc bài 1, bấm tra từ lạ, trả lời câu hỏi, ôn từ	Làm xong câu hỏi
+5	Listening 1	Nghe không phụ đề, làm câu hỏi, đọc phụ đề, chép chính tả 3 câu	Nghe ít nhất 2 lần
+6	Ngữ pháp 2 + Listening 2	Điểm ngữ pháp 2, nghe hội thoại thứ hai, nhại theo (shadowing)	Hoàn thành
+7	Ôn tập và đầu ra	Mini test, viết 5 câu hoặc nói 1 phút, nghe nền lại các bài	Điểm test + nhiệm vụ đầu ra
+Hai điểm chính của thiết kế này:
+
+Listening xuất hiện ở ngày 5, 6 và 7 (nghe lại), nên người học nghe cùng nội dung ít nhất 3 lần cách nhau. Đó là cách học lặp lại có khoảng cách.
+Từ vựng quay lại ở ngày 2, 4, 5, 7. Từ gặp ở nhiều dạng khác nhau (đọc, nghe, viết) mới ở lại lâu.
+3. Prompt chuẩn
+Mình khuyên không dùng một prompt khổng lồ tạo cả tuần cùng lúc, vì sẽ dài, dễ cắt giữa chừng và khó kiểm tra. Hãy chia thành các lượt, mỗi lượt nối với lượt trước:
+
+Lượt A: topic brief và danh sách từ → bạn duyệt
+Lượt B: ngữ pháp
+Lượt C: bài đọc (dùng danh sách từ đã duyệt)
+Lượt D: bài nghe (dùng danh sách từ đã duyệt)
+Lượt E: bài kiểm tra và lịch học theo ngày
+Prompt nền dùng chung (viết bằng tiếng Anh vì thường ổn định hơn, phần giải thích dành cho người học vẫn là tiếng Việt):
+
+You are an experienced English teacher and curriculum designer for
+Vietnamese adult learners.
+
+LEARNER PROFILE
+- Native language: Vietnamese
+- CEFR level: {{level}}   (e.g., A2)
+- Goal: practical everyday English, with listening as the weakest skill
+
+TOPIC: {{topic}}   WEEK: {{week_number}} of 12
+SITUATIONS (sub-topics): {{situations}}
+
+RULES (follow strictly)
+1. Language: example sentences, reading and listening in English at the
+   given CEFR level. All explanations, notes and translations in Vietnamese.
+2. Accuracy over quantity: if you are not sure a collocation or usage is
+   natural, leave it out. Never invent collocations.
+3. Core vocabulary: exactly 15 words + 5 chunks (fixed phrases). Choose by
+   frequency, usefulness in real situations, and ease of making sentences.
+   Avoid rare or academic words in the core list.
+4. Every core item must appear at least once in the reading AND at least
+   once in the listening script.
+5. Reading: 130–170 words for A2 (adjust for the level), natural text type
+   (email, notice, short article, or dialogue). Do not copy existing texts.
+6. Listening script: dialogue of 8–12 turns, about 60–90 seconds when read
+   aloud, natural spoken English with contractions. Include 2–3 examples of
+   connected speech (e.g., "want to" → "wanna") listed in a note.
+7. Grammar: 2 points that fit the situations. Explain WHEN to use them
+   (function), give the formula, 2 contrasts with commonly confused forms,
+   and 3 typical mistakes of Vietnamese learners.
+8. Questions: comprehension questions test understanding, not memory of
+   exact wording.
+9. Output ONLY valid JSON matching the schema. No markdown, no commentary.
+
+TASK FOR THIS STEP: {{step_instruction}}
+SCHEMA: {{json_schema}}
+Khung JSON gợi ý cho Lượt A (từ vựng):
+
+json
+{
+  "topic": "Food & Dining",
+  "level": "A2",
+  "situations": ["ordering food", "describing taste", "paying the bill"],
+  "core_words": [
+    {
+      "word": "order", "pos": "verb", "ipa": "/ˈɔːdər/",
+      "meaning_vi": "gọi món",
+      "collocations": ["order a drink", "ready to order"],
+      "register": "trung tính",
+      "examples": [{"en": "...", "vi": "..."}],
+      "vn_mistake": "..."
+    }
+  ],
+  "chunks": [
+    {"phrase": "Could I have the menu, please?", "meaning_vi": "...", "use": "..."}
+  ],
+  "extended_words": []
+}
+Hai mẹo khi chạy với Gemini miễn phí:
+
+Đặt đầu ra ở chế độ JSON (nếu API hỗ trợ) và kiểm tra JSON hợp lệ trước khi lưu. Nếu lỗi thì thử lại một lần.
+Giữ mỗi lượt gọi vừa phải để không bị cắt cụt. Một bài đọc kèm một bài nghe nên chia thành hai lượt riêng.
+4. Góp ý để khóa học tốt hơn
+Mỗi ngày có tiêu chí “hoàn thành” rõ ràng (cột cuối bảng ở trên). Bạn nhìn vào là biết đã xong hay chưa, không phải đoán.
+Cách theo dõi tiến độ: thanh tiến độ theo tuần, số ngày liên tiếp, số mục đã học, số phút nghe, điểm mini test, số từ cần ôn. Đừng chỉ hiện điểm số, nhất là với phần nghe (PDF nói rõ đúng 1/10 cũng không sao).
+Vòng ôn tập: từ sai ở mini test được đưa vào bộ ôn của tuần sau, sau đó lặp lại ở tuần thứ hai.
+Độ khó tăng dần có kiểm soát:
+Tuần	Trình độ	Bài đọc	Bài nghe
+1–4	A1–A2	~100–150 từ	6–8 lượt thoại, tốc độ chậm
+5–8	A2–B1	~150–200 từ	8–12 lượt thoại
+9–12	B1	~200–260 từ	10–14 lượt thoại, tốc độ thường
+Danh sách kiểm tra sau khi AI sinh nội dung (bước duyệt của bạn): nghĩa có đúng không, ví dụ có tự nhiên không, mỗi từ cốt lõi có xuất hiện trong bài đọc và bài nghe không, độ dài có đúng không, phần giải thích tiếng Việt có dễ hiểu không.
+Ngày nghỉ linh hoạt: nếu bỏ lỡ một ngày, web nên gợi ý “hôm nay làm bù ngày X” thay vì phạt. Học 5 ngày mỗi tuần cũng còn hơn bỏ cả tuần.
+Bước tiếp theo
+Bạn chọn chủ đề thí điểm (mình đề xuất Tuần 1 hoặc Tuần 4) và trình độ mục tiêu, mình sẽ điền sẵn prompt Lượt A cho chủ đề đó, kèm danh sách tình huống để bạn duyệt trước khi tạo từ vựng.
+Mình đã viết xong bộ prompt cho cả 12 tuần trong file prompt-pack-12-tuan. Mình thiết kế theo kiểu ghép để bạn khỏi phải quản lý 12 prompt dài giống nhau: một Master prompt dùng chung, một Topic brief riêng cho mỗi tuần, và một Step instruction cho mỗi lượt. File gồm:
+
+Master prompt với các quy tắc chung: giải thích bằng tiếng Việt, ví dụ tiếng Anh đúng trình độ, không bịa collocation, từ cốt lõi phải xuất hiện lặp lại trong bài đọc và bài nghe, chỉ trả JSON hợp lệ.
+5 lượt A–E kèm schema JSON: từ vựng, ngữ pháp, reading, listening, rồi mini test và lịch 7 ngày. Sau lượt A bạn duyệt tay danh sách từ trước khi chạy tiếp, vì các lượt sau dùng đúng danh sách đó.
+12 Topic brief gồm tình huống, điểm ngữ pháp, gợi ý từ vựng, trọng tâm nối âm, ghi chú văn hóa, loại bài đọc, loại bài nghe và nhiệm vụ đầu ra.
+Prompt riêng cho Tuần 12: không dạy từ mới, mà gom nội dung 11 tuần để ôn theo khoảng cách, thêm bài nghe thử và bảng tự đánh giá.
+Danh sách kiểm tra để duyệt nội dung AI sinh ra.
+
+Một số chỗ mình đã sửa so với PDF, bạn nên xem lại xem có đồng ý không:
+
+Ngữ pháp được sắp lại cho khỏi lặp (PDF lặp mạo từ, so sánh, hiện tại hoàn thành tiếp diễn và modal verbs). Mỗi tuần có đúng 2 điểm, ví dụ present perfect chuyển sang tuần 6 (kinh nghiệm), tuần 8 (for/since) và tuần 9 (tiếp diễn).
+Tuần 1 là 8 từ + 12 cụm giao tiếp, các tuần khác 15 từ + 5 cụm.
+Từ khoa học hoặc học thuật (ví dụ barometric pressure) chuyển xuống phần mở rộng, từ về khí hậu dồn sang tuần 11.
+Chủ đề sức khỏe có quy tắc không đưa chẩn đoán hay liều thuốc.
+
+Cách đưa vào project của bạn, gợi ý tách thành server/prompts/master.txt, server/prompts/steps/A.txt đến E.txt và content/topics/week-01.json đến week-12.json, để server tự điền biến rồi gọi Gemini lần lượt từng lượt. Mình có thể chuyển các Topic brief sang JSON nếu bạn cần.

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Thực hành hội thoại tiếng Anh theo các tình huống đời thường.">
+    <title>Speaking — English Web</title>
+    <link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/pages/speaking.css">
+    <script type="module" src="js/pages/speaking.js"></script>
+  </head>
+  <body><div data-navbar></div><main class="container page-shell speaking-page">
+    <header class="page-heading"><span class="eyebrow">FIND YOUR VOICE · 04</span><h1>Practice makes <span>progress.</span></h1><p>Luyện hội thoại từng chút một — bạn có thể gõ hoặc nói.</p></header>
+    <section class="scenario-card"><div><span class="eyebrow">TODAY'S SITUATION</span><h2 id="scenario-title">Đặt phòng khách sạn</h2><p id="scenario-description">Bạn muốn đặt một phòng cho kỳ nghỉ sắp tới.</p></div><div class="scenario-actions"><label class="sr-only" for="speaking-level">Trình độ tiếng Anh</label><select id="speaking-level"><option>A1</option><option>A2</option><option selected>B1</option><option>B2</option><option>C1</option></select><button class="button button-secondary" id="change-scenario" type="button">Đổi tình huống ↻</button></div></section>
+    <section class="conversation-card"><div class="conversation-heading"><div><span class="eyebrow">LET'S TALK</span><h2>Cuộc hội thoại</h2></div><button class="icon-button" id="speak-last" type="button" aria-label="Nghe câu trả lời gần nhất">🔊</button></div><div class="conversation-log" id="conversation-log" aria-live="polite"><div class="chat-bubble assistant-bubble"><span class="bubble-avatar">e.</span><div><small>ENGLISH WEB</small><p>Good evening! Welcome to the hotel. How can I help you today?</p></div></div></div>
+      <form class="message-form" id="message-form"><label class="sr-only" for="message-input">Tin nhắn tiếng Anh</label><input id="message-input" placeholder="Gõ câu trả lời bằng tiếng Anh..." autocomplete="off" required><button class="icon-button mic-button" id="voice-input" type="button" aria-label="Nhập bằng giọng nói">🎙</button><button class="button button-primary" type="submit">Gửi <span aria-hidden="true">→</span></button></form><div class="voice-controls"><button class="button button-secondary" id="microphone-permission" type="button">Bật microphone</button><p class="voice-hint" id="voice-hint">Cho phép microphone để nói tiếng Anh với trang web.</p></div></section>
+    <section class="feedback-card" id="speaking-feedback" hidden aria-live="polite"></section>
+  </main><div data-footer></div></body>
+</html>

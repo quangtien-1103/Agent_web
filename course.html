@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="English 1: khóa học tiếng Anh 12 tuần theo chủ đề.">
+    <title>English 1 — English Web</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages/course.css">
+    <script type="module" src="js/pages/course.js"></script>
+  </head>
+  <body>
+    <div data-navbar></div>
+    <main class="container page-shell course-page">
+      <section class="course-hero">
+        <div class="course-roadmap">
+          <span class="eyebrow">ENGLISH 1 · 12 TUẦN</span>
+          <h1>Từ những câu đầu tiên<br><span>đến tự tin giao tiếp.</span></h1>
+          <p>Một lộ trình học tiếng Anh thực tế: mỗi tuần một chủ đề, học đủ từ vựng, ngữ pháp, reading, listening và một nhiệm vụ đầu ra.</p>
+          <div class="course-meta"><span>◷ 7 ngày / tuần</span><span>◎ A1 → B1</span><span>✦ Nghe là trọng tâm</span></div>
+        </div>
+        <div class="course-seal" aria-hidden="true"><strong>12</strong><span>WEEKS<br>TO GROW</span></div>
+      </section>
+
+      <section class="course-progress-panel">
+        <div class="section-heading"><div><span class="eyebrow">YOUR JOURNEY</span><h2>Tiến độ khóa học</h2></div><strong id="course-progress-label">0 / 12 tuần</strong></div>
+        <div class="progress-track"><span id="course-progress-bar"></span></div>
+        <p id="course-progress-caption">Bắt đầu từ Tuần 1 và học theo nhịp của bạn.</p>
+      </section>
+
+      <section class="course-layout">
+        <div>
+          <div class="section-heading course-list-heading"><div><span class="eyebrow">THE ROADMAP</span><h2>12 chủ đề, 12 tuần</h2></div><span class="heading-note">Mỗi tuần khoảng 60-90 phút mỗi ngày</span></div>
+          <div class="week-list" id="week-list"></div>
+        </div>
+        <aside class="week-detail" id="week-detail" aria-live="polite"></aside>
+      </section>
+    </main>
+    <div data-footer></div>
+  </body>
+</html>

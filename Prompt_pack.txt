@@ -1,0 +1,745 @@
+# Prompt Pack: Khóa học tiếng Anh 12 tuần
+
+Bộ prompt để AI tạo nội dung cho từng tuần: **từ vựng, ngữ pháp, reading, listening, bài kiểm tra và lịch học theo ngày**.
+
+## 0. Cách dùng
+
+Mỗi lần gọi AI = **Master prompt** (dùng chung) + **Topic brief** (mục 3, mỗi tuần một bộ) + **Step instruction** (mục 2, lượt A–E).
+
+Chạy theo thứ tự cho mỗi tuần:
+
+| Lượt | Việc | Đầu vào thêm | Lưu thành |
+|---|---|---|---|
+| A | Từ vựng | không | `content/week-XX/vocab.json` |
+| **Duyệt tay A** | Sửa danh sách từ trước khi đi tiếp | | |
+| B | Ngữ pháp | vocab đã duyệt | `grammar.json` |
+| C | Reading | vocab đã duyệt | `reading.json` |
+| D | Listening | vocab đã duyệt | `listening.json` |
+| E | Mini test + lịch 7 ngày | cả 4 file trên | `quiz.json`, `plan.json` |
+
+Lý do chia lượt: mỗi lượt ngắn nên ít bị cắt cụt, dễ kiểm tra, và lượt C, D, E dùng đúng danh sách từ bạn đã duyệt.
+
+Tuần 12 dùng prompt riêng (mục 4).
+
+### Những thay đổi so với lộ trình PDF (có chủ ý)
+
+1. **Ngữ pháp được sắp lại để không lặp và tăng dần độ khó.** PDF lặp mạo từ (tuần 4, 8), so sánh (tuần 8, 9), hiện tại hoàn thành tiếp diễn (tuần 7, 9) và modal verbs (tuần 4, 6, 9). Mỗi tuần giờ có đúng 2 điểm, mỗi điểm chỉ xuất hiện ở một tuần chính (một số điểm được ôn lại có chủ đích).
+2. **Từ cốt lõi = 20 mục/tuần** (khoảng 15 từ + 5 cụm cố định). Từ học thuật hoặc quá hiếm chuyển sang `extended` (tùy chọn). Tuần 1 thiên về cụm giao tiếp nên là 8 từ + 12 cụm.
+3. **Trình độ tăng dần:** A1 ở tuần 1–2, A2 ở tuần 3–6, A2–B1 ở tuần 7–8, B1 ở tuần 9–11.
+4. Tên các website nghe trong PDF **chưa được kiểm tra** còn hoạt động hay không. Kiểm tra từng link trước khi đưa vào web.
+
+---
+
+## 1. Master prompt (dùng chung cho mọi lượt)
+
+```
+ROLE
+You are an experienced ESL teacher and curriculum designer. You write
+learning content for Vietnamese adult learners of English.
+
+LEARNER
+- First language: Vietnamese
+- Level for this week: {{level}} (CEFR)
+- Main weakness: listening (can read slowly but cannot catch spoken English)
+- Study time: 60-90 minutes per day, 7 days per week
+
+WEEK CONTEXT
+- Course week: {{week}} of 12
+- Topic: {{topic}}
+- Situations (ALL content must revolve around these): {{situations}}
+- Grammar points: {{grammar_points}}
+- Number of core words: {{n_words}}; number of chunks (fixed phrases): {{n_chunks}}
+- Vocabulary seeds (prefer these when they fit the level): {{seeds}}
+- Put these in "extended", never in core: {{extended_hints}}
+- Pronunciation / connected speech focus: {{speech_focus}}
+- Cultural and usage note: {{culture_note}}
+
+GLOBAL RULES (follow strictly)
+1. LANGUAGE. Example sentences, reading texts and listening scripts are in
+   English at the given CEFR level. Every explanation, tip, translation and
+   feedback is in Vietnamese.
+2. ACCURACY OVER QUANTITY. If you are not sure that a collocation or usage is
+   natural, leave it out. Never invent collocations. If a requested count
+   cannot be met with good quality, return fewer items and say why in the
+   "notes" field. Never pad.
+3. LEVEL CONTROL. Use mostly words and structures at or below the given
+   level. Keep sentences short. Only the target vocabulary and grammar of this
+   week may go slightly above level.
+4. RECYCLING. Every core item must appear at least twice across all texts of
+   the week (reading + listening). At least 70% of core items must appear in
+   the reading texts, and at least 70% in the listening scripts.
+5. NATURALNESS. Write what real people say or write in this situation. Use
+   contractions in speech. Avoid textbook-sounding sentences such as
+   "I am a student. I am from Vietnam." unless the level is A1 and it fits.
+6. NEUTRAL CONTENT. Do not copy existing texts. No real brands, real people,
+   real news, song lyrics or quotations. Use common international names.
+7. IDS. Give every item a stable id: w{WEEK}.v01.. for core words, w{WEEK}.c01..
+   for chunks, w{WEEK}.g1.. for grammar points, w{WEEK}.r1.. for reading,
+   w{WEEK}.l1.. for listening, w{WEEK}.q01.. for quiz items. Reuse ids from
+   the approved vocabulary list when referring to words.
+8. FORMAT. Output ONLY valid JSON: double quotes, no comments, no trailing
+   commas, no markdown fences, no text outside the JSON object.
+9. SAFETY. For health topics give only general, everyday-language advice. No
+   diagnoses, no medicine names with doses.
+
+STEP INSTRUCTION
+{{step_instruction}}
+
+INPUT FROM PREVIOUS STEPS (empty for step A)
+{{approved_json}}
+
+SCHEMA
+{{json_schema}}
+```
+
+Điền `{{...}}` bằng Topic brief ở mục 3. Biến `{{step_instruction}}` và `{{json_schema}}` lấy từ mục 2.
+
+---
+
+## 2. Step instructions và schema
+
+### Lượt A: Từ vựng
+
+```
+STEP INSTRUCTION
+Create the vocabulary set for this week.
+- Choose the core words by this order of priority: (1) frequency in everyday
+  life, (2) usefulness in the situations above, (3) ease of building
+  sentences. Mix word types: nouns, verbs, adjectives; avoid rare words.
+- Create the chunks: fixed phrases a learner can say as a whole (requests,
+  questions, polite replies). Chunks matter more than single words.
+- Give "meaning_vi" for the sense used in this topic only (the most common
+  one), not a full dictionary entry.
+- Each core word: 2-4 natural collocations, 2 examples from two different
+  situations, one Vietnamese-learner tip (pronunciation or usage mistake;
+  empty string if none).
+- Add 8-10 "extended" words (optional, higher level or less frequent).
+- Add 2-3 "confusables": pairs of words learners mix up in this topic.
+- Split all core items into two study days: day1_ids and day2_ids (balanced,
+  about 10 each).
+```
+
+```json
+{
+  "week": 4,
+  "topic": "Food & Dining",
+  "level": "A2",
+  "core_words": [
+    {
+      "id": "w04.v01",
+      "word": "order",
+      "pos": "verb",
+      "ipa": "/ˈɔːdər/",
+      "meaning_vi": "gọi món",
+      "collocations": ["order a drink", "ready to order"],
+      "register": "neutral",
+      "examples": [
+        {"en": "...", "vi": "..."},
+        {"en": "...", "vi": "..."}
+      ],
+      "vn_tip": "..."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "w04.c01",
+      "phrase": "Could I have the menu, please?",
+      "meaning_vi": "...",
+      "when_to_use_vi": "...",
+      "example_reply": "Sure, here you are."
+    }
+  ],
+  "extended_words": [
+    {"word": "...", "pos": "...", "meaning_vi": "...", "example_en": "..."}
+  ],
+  "confusables": [
+    {"pair": ["bill", "check"], "difference_vi": "..."}
+  ],
+  "day1_ids": [],
+  "day2_ids": [],
+  "notes": ""
+}
+```
+
+### Lượt B: Ngữ pháp
+
+```
+STEP INSTRUCTION
+Create the grammar lesson for the grammar points of this week. Use ONLY the
+approved vocabulary list (input) for example sentences wherever possible.
+For each grammar point:
+- Teach by FUNCTION: explain in Vietnamese WHEN a speaker uses it in the
+  situations of this week, not only the formula.
+- Give the formula in a short form.
+- Give 4 examples, each tagged with a situation.
+- Add "natural_usage_vi": how people really say it (shortenings, common
+  patterns).
+- Add 2 contrasts with a form learners confuse it with.
+- Add 3 typical mistakes of Vietnamese learners (wrong, right, why_vi).
+- Add 6 practice items: 3 gap-fill and 3 "make your own sentence" with a
+  prompt and a model answer.
+```
+
+```json
+{
+  "week": 4,
+  "grammar_points": [
+    {
+      "id": "w04.g1",
+      "name": "Countable and uncountable nouns with a/an/some/any",
+      "level": "A2",
+      "function_vi": "...",
+      "formula": "...",
+      "examples": [
+        {"situation": "ordering food", "en": "...", "vi": "..."}
+      ],
+      "natural_usage_vi": "...",
+      "contrasts": [
+        {"vs": "...", "difference_vi": "...", "example_en": "..."}
+      ],
+      "vn_mistakes": [
+        {"wrong": "...", "right": "...", "why_vi": "..."}
+      ],
+      "practice": [
+        {"type": "gap_fill", "prompt": "...", "answer": "...", "explanation_vi": "..."},
+        {"type": "make_sentence", "prompt": "...", "model_answer": "..."}
+      ],
+      "uses_word_ids": []
+    }
+  ],
+  "notes": ""
+}
+```
+
+### Lượt C: Reading
+
+```
+STEP INSTRUCTION
+Write the reading material using the approved vocabulary list (input).
+- MAIN TEXT: type = {{reading_type_1}}, length = {{main_words}} words.
+- BONUS TEXT: type = {{reading_type_2}}, length = 60-90 words.
+- Follow the recycling rules in the global rules (at least 70% of core items
+  in the two texts together).
+- A "glossary" with at most 5 words that are above level but needed (not
+  from the core list), with a Vietnamese meaning.
+- Questions for the MAIN TEXT: 3 detail questions (multiple choice, 3
+  options), 1 inference question, 1 vocabulary-in-context question, and 1
+  true / false / not given set of 3 statements. Questions test
+  understanding, not memory of exact wording.
+- One short reading-skill tip in Vietnamese (skimming, scanning or
+  guessing meaning from context).
+Length guide by level: A1 80-110, A2 120-170, A2-B1 150-200, B1 190-250 words.
+```
+
+```json
+{
+  "week": 4,
+  "main": {
+    "id": "w04.r1",
+    "title": "...",
+    "text_type": "restaurant review",
+    "paragraphs": ["...", "..."],
+    "word_count": 0,
+    "vocab_used_ids": [],
+    "glossary": [{"word": "...", "meaning_vi": "..."}],
+    "questions": [
+      {
+        "id": "w04.r1.q1", "kind": "detail",
+        "question": "...", "options": ["...", "...", "..."],
+        "answer_index": 0, "explanation_vi": "..."
+      },
+      {
+        "id": "w04.r1.q6", "kind": "true_false_ng",
+        "statement": "...", "answer": "true|false|not_given", "explanation_vi": "..."
+      }
+    ],
+    "skill_tip_vi": "..."
+  },
+  "bonus": {
+    "id": "w04.r2",
+    "title": "...",
+    "text_type": "...",
+    "paragraphs": ["..."],
+    "word_count": 0,
+    "vocab_used_ids": [],
+    "questions": []
+  },
+  "notes": ""
+}
+```
+
+### Lượt D: Listening
+
+```
+STEP INSTRUCTION
+Write two listening scripts using the approved vocabulary list (input).
+- SCRIPT 1: {{listening_type_1}}.
+- SCRIPT 2: {{listening_type_2}}.
+- Each script is 60-90 seconds when read aloud at normal speed (about
+  130-200 words; shorter and slower for A1).
+- Natural spoken English: contractions, short turns, a few natural reactions
+  ("Oh, really?", "Sure."). No stage directions or sound effects in the text.
+- Dialogue lines carry a speaker id (A, B). Give each speaker a gender and a
+  role so the app can pick different voices.
+- "text" is for display. "tts_text" is for a text-to-speech engine: spell out
+  numbers, times and prices as they are spoken ("twelve thirty", "five
+  dollars fifty").
+- Where natural, include at least one detail that learners must catch
+  precisely (a number, time, price or place).
+- Add 2-3 connected-speech notes (written form, spoken form, explanation in
+  Vietnamese), based on this week's pronunciation focus.
+- Tasks for each script: 1 gist question, 4 detail questions (multiple
+  choice), 3 dictation sentences (give line numbers), a gap-fill excerpt
+  with 6 blanks, and 4 lines for shadowing.
+- Follow the recycling rules (at least 70% of core items across the two
+  scripts).
+```
+
+```json
+{
+  "week": 4,
+  "scripts": [
+    {
+      "id": "w04.l1",
+      "title": "...",
+      "situation": "...",
+      "speakers": [
+        {"id": "A", "gender": "female", "role": "customer"},
+        {"id": "B", "gender": "male", "role": "waiter"}
+      ],
+      "lines": [
+        {"n": 1, "speaker": "B", "text": "...", "tts_text": "..."}
+      ],
+      "approx_duration_sec": 70,
+      "vocab_used_ids": [],
+      "connected_speech_notes": [
+        {"written": "Could I have", "spoken": "Couldja have", "explanation_vi": "..."}
+      ],
+      "tasks": {
+        "gist": {"question": "...", "options": ["...", "...", "..."], "answer_index": 0},
+        "details": [
+          {"id": "w04.l1.q1", "question": "...", "options": ["...", "...", "..."], "answer_index": 0, "evidence_line": 3}
+        ],
+        "dictation": [{"line": 2}, {"line": 5}, {"line": 7}],
+        "gap_fill": {"from_line": 4, "to_line": 7, "blanks": ["...", "..."]},
+        "shadowing_lines": [2, 4, 6, 8]
+      }
+    }
+  ],
+  "background_listening_tip_vi": "...",
+  "notes": ""
+}
+```
+
+### Lượt E: Mini test, nhiệm vụ đầu ra và lịch 7 ngày
+
+```
+STEP INSTRUCTION
+Using all four approved files (input), create:
+1. MINI TEST of 12 items: 4 vocabulary, 3 grammar, 2 reading, 3 listening.
+   Reading items reuse the reading texts but ask new questions; listening
+   items refer to a script id and line numbers so the app can replay audio.
+   Every item has an answer and a short Vietnamese explanation.
+2. OUTPUT TASK: {{output_task}}. Give 3 "can-do" success criteria and a model
+   answer at the learner's level.
+3. DAILY PLAN of 7 days, using exactly this template and the real ids:
+   Day 1: vocabulary part 1 (day1_ids). Listen and repeat each item, write 3
+          sentences. Done when all day1 items are marked learned.
+   Day 2: vocabulary part 2 (day2_ids) + quick review of day 1 + read a
+          mini-dialogue that uses the words. Done when quick quiz >= 70%.
+   Day 3: grammar point 1 (w{WEEK}.g1) + its practice. Done when 5 sentences
+          are written.
+   Day 4: reading main text + questions, tap unknown words, review words.
+          Done when the questions are finished.
+   Day 5: listening script 1: listen without text, answer questions, read the
+          text, do dictation. Done after at least 2 listens.
+   Day 6: grammar point 2 (w{WEEK}.g2) + listening script 2 + shadowing.
+   Day 7: review, mini test, output task, background listening of both
+          scripts. Done when the test and the output task are finished.
+   Each day has 2 sessions of 30-45 minutes, a list of task ids, and a
+   "done_when" sentence in Vietnamese.
+4. REVIEW QUEUE: ids of items to schedule for spaced review next week
+   (default: all core items; the app will add the ones the learner gets wrong).
+```
+
+```json
+{
+  "week": 4,
+  "mini_test": [
+    {
+      "id": "w04.q01", "skill": "vocabulary", "refers_to": "w04.v03",
+      "question": "...", "options": ["...", "...", "..."],
+      "answer_index": 0, "explanation_vi": "..."
+    },
+    {
+      "id": "w04.q10", "skill": "listening", "script_id": "w04.l1",
+      "play_lines": [3, 4], "question": "...", "options": ["...", "...", "..."],
+      "answer_index": 0, "explanation_vi": "..."
+    }
+  ],
+  "output_task": {
+    "type": "writing|speaking",
+    "prompt_vi": "...",
+    "can_do": ["...", "...", "..."],
+    "model_answer": "..."
+  },
+  "daily_plan": [
+    {
+      "day": 1,
+      "focus_vi": "Từ vựng phần 1",
+      "sessions": [{"minutes": 35, "tasks": ["w04.v01", "w04.v02"]}, {"minutes": 30, "tasks": []}],
+      "done_when_vi": "..."
+    }
+  ],
+  "review_queue_ids": [],
+  "notes": ""
+}
+```
+
+---
+
+## 3. Topic briefs (12 tuần)
+
+Mỗi brief là các giá trị điền vào `{{...}}` của Master prompt. Ngữ pháp đã sắp lại theo mục 0.
+
+### Tuần 1: Everyday Conversations
+
+```yaml
+week: 1
+topic: "Everyday Conversations"
+level: "A1"
+n_words: 8
+n_chunks: 12          # tuần này chủ yếu là cụm giao tiếp cố định
+situations: "greeting and introducing yourself; asking and giving name and origin; asking and answering 'How are you?'; polite words (please, thank you, sorry, excuse me); offering and asking for help; saying goodbye"
+grammar_points: "(1) 'be' and present simple: affirmative, negative, questions; (2) pronouns: subject pronouns, object pronouns, possessive adjectives"
+seeds: "Nice to meet you; What's your name?; I'm fine, thank you; How's it going?; What's up?; Please; Thank you; You're welcome; Excuse me; Sorry; Pardon?; No problem; Can I help you?; See you later; Have a good day; Goodbye"
+extended_hints: "It's a pleasure to meet you; My pleasure; It's all right; So long; Pardon me"
+speech_focus: "weak forms and linking in greetings: 'What's your name?' (whatcha name), 'See you' (see ya), 'How are you?' (how ya doin'); falling intonation in Wh-questions and greetings"
+culture_note: "'How are you?' is a greeting, not a real question; people answer shortly. Vietnamese kinship pronouns (anh, chị, em, ...) do not exist in English: use 'you' and the person's first name. Use Mr/Ms + family name only in formal situations."
+reading_type_1: "a short chat message in which someone introduces themselves"
+reading_type_2: "a name badge and a welcome notice at an English class"
+main_words: "80-110"
+listening_type_1: "two people meeting for the first time, 8 turns, slow speed"
+listening_type_2: "a short service exchange: 'Can I help you?' at a shop or reception desk"
+output_task: "Write or say 6 sentences: greet a new person, introduce yourself, ask one question, and say goodbye."
+```
+
+### Tuần 2: Family & Relationships
+
+```yaml
+week: 2
+topic: "Family & Relationships"
+level: "A1-A2"
+n_words: 15
+n_chunks: 5
+situations: "describing family members; talking about relatives' age, job and where they live; family events (birthday, family reunion); talking about friends, partner and in-laws; telling a short story about a family member in the past"
+grammar_points: "(1) possessive 's and possessive adjectives, 'have/has got'; (2) past simple: 'was/were', regular and common irregular verbs"
+seeds: "mother, father, parents, sister, brother, sibling, grandmother, grandfather, cousin, uncle, aunt, mother-in-law, husband, wife, partner, close, get along with, take after, grow up, family reunion"
+extended_hints: "nuclear family, extended family, blended family, sibling rivalry, kinship, next of kin, marital status, unconditional love, family dynamics, upbringing"
+speech_focus: "the 's endings (/s/, /z/, /ɪz/): 'brother's', 'sister's', 'Alex's'; past tense -ed endings (/t/, /d/, /ɪd/): 'worked', 'lived', 'wanted'"
+culture_note: "Vietnamese kinship terms do not map one-to-one to English: bác/chú/cậu/dượng are all 'uncle'; anh/em can be 'older/younger brother' only when it matters. Learners often say 'my family have 4 people' instead of 'there are four people in my family'."
+reading_type_1: "a blog post 'My family' written by a young adult"
+reading_type_2: "a message inviting relatives to a family birthday"
+main_words: "120-160"
+listening_type_1: "two friends looking at a family photo and asking about each person"
+listening_type_2: "a phone call inviting a relative to a family reunion (date, time, place)"
+output_task: "Write 6-8 sentences about your family: who is in it, one detail for two people, and one thing that happened last year."
+```
+
+### Tuần 3: Daily Routines
+
+```yaml
+week: 3
+topic: "Daily Routines"
+level: "A2"
+n_words: 15
+n_chunks: 5
+situations: "morning and evening routine; household chores; work or study schedule; free time after work; talking about time and how often you do things"
+grammar_points: "(1) adverbs of frequency (always, usually, often, sometimes, never) and time expressions (at 7 o'clock, every day, on Mondays, in the evening); (2) present simple vs present continuous (habits vs what is happening now or around now)"
+seeds: "wake up, get up, have breakfast, go to work, go to bed, do the laundry, tidy up, take a nap, walk the dog, check email, schedule, routine, on time, be late, take a shower, usually, sometimes, never, 'What time do you...?', 'I'm busy right now'"
+extended_hints: "time management, work-life balance, productive, time-saving strategies, daily planner, time-consuming, daily rituals, leisure time"
+speech_focus: "reduction of 'do you' and 'does he': 'What time d'you get up?'; clock times said fast ('seven-fifteen', 'half past six'); contrast /ɪ/ in 'it's' vs /iː/ in 'eat'"
+culture_note: "English speakers say 'half past seven' and '7:30'. 'Breakfast/lunch/dinner' take no article ('I have breakfast at 7'). Learners often say 'I am go to work' (mixing continuous with a base verb) and put the adverb in the wrong place ('I go usually...')."
+reading_type_1: "a short blog post 'A day in my life'"
+reading_type_2: "a weekly to-do list or planner with times"
+main_words: "130-170"
+listening_type_1: "a short interview: a reporter asks someone about their daily routine"
+listening_type_2: "a voicemail or phone call arranging a time to meet (times and days)"
+output_task: "Describe your usual day in 7-8 sentences using at least three adverbs of frequency and two times."
+```
+
+### Tuần 4: Food & Dining
+
+```yaml
+week: 4
+topic: "Food & Dining"
+level: "A2"
+n_words: 15
+n_chunks: 5
+situations: "ordering food in a restaurant or café; describing taste and food; dietary needs and preferences (vegetarian, allergic); asking for and paying the bill; explaining a Vietnamese dish to a foreign friend"
+grammar_points: "(1) countable and uncountable nouns with a/an/the/some/any/much/many; (2) polite requests and offers with can/could/would ('Could I have...?', 'Would you like...?')"
+seeds: "menu, order, starter, main course, dessert, bill (check), tip, reservation, spicy, sweet, sour, salty, crispy, vegetarian, allergic to, chopsticks, 'I'd like...', 'Could I have...?', 'Can I get the bill, please?', 'Is it spicy?'"
+extended_hints: "gastronomy, sommelier, farm-to-table, fine dining, culinary art, silverware, gourmet, exotic dishes, chef's special"
+speech_focus: "'Could I' (couldja), 'Would you like' (wouldja like), 'a cup of' (a cuppa); stress on the main word in orders ('a COFfee, please')"
+culture_note: "British 'bill/starter' vs American 'check/appetizer'; tipping customs differ by country. Learners often say 'a rice' or 'many water' and forget 's' on plural nouns. Explaining Vietnamese food: describe the main ingredient, how it is eaten, and the taste."
+reading_type_1: "a short restaurant review"
+reading_type_2: "a simple menu with prices and a short note about allergies"
+main_words: "130-170"
+listening_type_1: "a customer orders a meal and asks about ingredients and the bill"
+listening_type_2: "a phone call booking a table (day, time, number of people)"
+output_task: "Write an 8-line role-play: you order a meal, ask one question about the food, and pay the bill."
+```
+
+### Tuần 5: Travel & Transportation
+
+```yaml
+week: 5
+topic: "Travel & Transportation"
+level: "A2"
+n_words: 15
+n_chunks: 5
+situations: "booking tickets and a hotel; at the airport (check-in, boarding, baggage, passport control); asking for directions and using public transport; sightseeing; solving small problems (delay, lost luggage)"
+grammar_points: "(1) prepositions of place, time and movement (in, on, at, to, from, into, through, across); (2) future with 'be going to' and 'will' (plans vs decisions and predictions)"
+seeds: "ticket, flight, boarding pass, passport, luggage, gate, delay, platform, one-way, round trip, book, check in, reservation, tourist attraction, map, 'How do I get to...?', 'Where is the...?', 'What time does it leave?'"
+extended_hints: "layover, jet lag, customs declaration, travel insurance, turbulence, travel itinerary, passport control, cultural exchange, guided tour"
+speech_focus: "numbers, gates and times said quickly ('gate fifteen' vs 'gate fifty'); stressed syllables in place names; 'going to' (gonna), 'want to' (wanna)"
+culture_note: "Announcements are fast and use numbers and codes; learners must catch gate, time and platform. 'On the bus/train/plane' but 'in a taxi/car'. Learners often say 'I will going to' or 'go to home'."
+reading_type_1: "a travel confirmation email (flight or hotel) with dates and times"
+reading_type_2: "a station or airport notice with a delay"
+main_words: "130-170"
+listening_type_1: "check-in dialogue at an airport counter"
+listening_type_2: "a public announcement about a delayed flight or platform change (numbers, gate, new time)"
+output_task: "Write 8 sentences about a trip you plan: where, how you travel, what you are going to do, and one thing you will buy."
+```
+
+### Tuần 6: Hobbies & Interests
+
+```yaml
+week: 6
+topic: "Hobbies & Interests"
+level: "A2"
+n_words: 15
+n_chunks: 5
+situations: "talking about what you like and dislike; describing a hobby (how often, where, with whom); inviting someone to join an activity; asking about experiences ('Have you ever...?'); starting a new hobby"
+grammar_points: "(1) gerunds and infinitives (like/enjoy/love + -ing; want/decide/hope + to); (2) present perfect for life experience ('Have you ever...?', 'I've never...')"
+seeds: "hobby, collect, play chess, play the guitar, paint, garden, knit, hiking, cooking, join a club, practice, be good at, be interested in, free time, learn, 'How often do you...?', 'Do you fancy...?', 'I'm into...'"
+extended_hints: "philately, woodworking, model building, role-playing games, mindfulness, recreational activities, artistic endeavors, leisure pursuit, DIY projects, creative expression"
+speech_focus: "'have you' (hav-ya), 'been' /bɪn/ vs /biːn/; -ing endings not dropped; sentence stress in 'I REALLY like...'"
+culture_note: "'I like to swim' and 'I like swimming' are both fine; learners often say 'I like play football'. 'Have you ever' needs a past participle. 'Hobby' is for activities you do, 'interest' is broader."
+reading_type_1: "a short magazine-style article about a popular hobby"
+reading_type_2: "a club poster or social media post inviting people to join an activity"
+main_words: "140-180"
+listening_type_1: "two friends talking about weekend hobbies and inviting each other"
+listening_type_2: "a short interview with someone who has an unusual hobby"
+output_task: "Write 8 sentences about your hobbies: two things you enjoy, one thing you want to try, and one thing you have never done."
+```
+
+### Tuần 7: Weather & Seasons
+
+```yaml
+week: 7
+topic: "Weather & Seasons"
+level: "A2-B1"
+n_words: 15
+n_chunks: 5
+situations: "describing today's weather; seasons and clothes; weather forecast and plans; extreme weather and safety (storm, flood, heat); describing the climate and seasons in Vietnam to a foreigner"
+grammar_points: "(1) adjectives vs adverbs (heavy rain / it rains heavily; a quick storm / it passed quickly); (2) zero and first conditional ('If it rains, we stay home' / 'If it rains, we'll cancel')"
+seeds: "sunny, cloudy, rainy, windy, humid, hot, freezing, forecast, temperature, degrees, storm, typhoon, flood, heatwave, season, 'It's pouring', 'It's going to rain', 'What's the weather like?', 'Take an umbrella'"
+extended_hints: "precipitation, barometric pressure, dew point, heat index, ozone layer, meteorology, climatic conditions, weather phenomena (climate-change terms belong to week 11)"
+speech_focus: "numbers and temperatures ('thirty-five degrees', 'minus five'); /θ/ and /ð/ in 'weather', 'thunder', 'the'; contractions 'it'll', 'we'll'"
+culture_note: "British small talk often starts with the weather. Learners often say 'It is rain' or 'very hot hot'. Vietnam has regional seasons: describe them with simple words (rainy season, dry season, typhoon season)."
+reading_type_1: "a weather forecast text for three days"
+reading_type_2: "a short news story about a storm with safety advice"
+main_words: "150-200"
+listening_type_1: "a radio or TV weather forecast with temperatures"
+listening_type_2: "two friends planning a weekend depending on the weather"
+output_task: "Write 8 sentences: the weather in your city in two seasons, and two plans using 'If ... will ...'."
+```
+
+### Tuần 8: Education & Learning
+
+```yaml
+week: 8
+topic: "Education & Learning"
+level: "A2-B1"
+n_words: 15
+n_chunks: 5
+situations: "talking about school or university and subjects; study habits and exams; choosing and enrolling in a course; asking a teacher or advisor for help; online learning and study abroad"
+grammar_points: "(1) comparatives and superlatives (-er/more, the -est/the most, as ... as); (2) present perfect with 'for' and 'since' ('I've studied English for two years')"
+seeds: "subject, lecture, assignment, deadline, exam, grade, degree, scholarship, course, semester, major, tutor, library, attend, graduate, submit, 'How long have you studied...?', 'I'm studying for an exam', 'Could you explain this?'"
+extended_hints: "peer review, academic advisor, lifelong learning, extracurricular activities, educational philosophy, academic excellence, student leadership, academic standards"
+speech_focus: "'-er' endings (/ər/) in comparatives; stress in 'the most interesting'; 'for' (fer) vs 'four'; contractions 'I've', 'she's been'"
+culture_note: "In English-speaking universities students often call lecturers by title; emails to teachers follow a polite structure. Learners often confuse 'for' and 'since' and say 'more better' or 'I study here since 2024'."
+reading_type_1: "an email from a student to a lecturer asking for an extension or help"
+reading_type_2: "a short course description from a university website"
+main_words: "150-200"
+listening_type_1: "a student talks with an academic advisor about choosing courses"
+listening_type_2: "two students planning to study together before an exam"
+output_task: "Write 8 sentences comparing two ways of studying and saying how long you have studied something."
+```
+
+### Tuần 9: Health & Well-being
+
+```yaml
+week: 9
+topic: "Health & Well-being"
+level: "B1"
+n_words: 15
+n_chunks: 5
+situations: "describing symptoms to a doctor or pharmacist; giving and asking for health advice; healthy habits (food, exercise, sleep); stress and mental well-being; making a medical appointment"
+grammar_points: "(1) modals of advice and obligation (should, shouldn't, must, have to, don't have to); (2) present perfect continuous ('How long have you been feeling like this?')"
+seeds: "headache, fever, cough, sore throat, pain, appointment, prescription, medicine, symptoms, rest, exercise, balanced diet, stress, sleep, 'What's the matter?', 'I've been feeling tired', 'You should rest', 'Take it easy'"
+extended_hints: "holistic medicine, dietitian, nutritionist, physical therapy, wellness retreat, fitness tracker, mental resilience, alternative therapies, wellness coaching, stress management"
+speech_focus: "weak forms of 'should', 'have to' (hafta), 'been'; stress on symptom words ('I've got a TERrible headache'); /θ/ in 'throat', 'health'"
+culture_note: "Use everyday language only. No diagnoses and no medicine doses in the content. Learners often say 'I am hurt' for 'It hurts' and mix 'must' with 'have to'. Polite advice often uses 'Maybe you should...'."
+reading_type_1: "a short article with everyday health advice (sleep, food, movement)"
+reading_type_2: "an appointment reminder message and a clinic opening-hours notice"
+main_words: "180-240"
+listening_type_1: "a dialogue between a patient and a doctor about common symptoms"
+listening_type_2: "a short wellness podcast clip with three simple tips"
+output_task: "Write 8 sentences: describe how you have been feeling for a few days and give a friend three pieces of advice."
+```
+
+### Tuần 10: Technology & Gadgets
+
+```yaml
+week: 10
+topic: "Technology & Gadgets"
+level: "B1"
+n_words: 15
+n_chunks: 5
+situations: "using devices and apps; describing a problem and asking for tech support; online safety and privacy; buying and comparing gadgets; talking about news and trends in technology"
+grammar_points: "(1) passive voice in present simple and past simple ('The app is used by...', 'It was launched in 2023'); (2) reported speech for statements ('She said that the battery was dead')"
+seeds: "device, app, download, update, password, screen, battery, charge, connect, Wi-Fi, online, software, search, account, 'It doesn't work', 'It keeps crashing', 'Have you tried turning it off and on?', 'My phone is dead'"
+extended_hints: "augmented reality, virtual reality, cloud computing, cybersecurity, cryptocurrency, 3D printing, autonomous vehicles, digital transformation, disruptive technology, tech entrepreneurship, internet of things"
+speech_focus: "stress in compound words ('SMARTphone', 'LAPtop'); acronyms said letter by letter ('USB', 'Wi-Fi'); past participles in passive: /t/, /d/, /ɪd/ endings"
+culture_note: "Use neutral invented product names, no real brands. Passive is common in instructions and news ('Your order has been shipped'). Learners often forget 'be' in passive ('The phone made in China') and reported speech tense shifts."
+reading_type_1: "a product description with a short customer review (no real brand)"
+reading_type_2: "a short tech news item about a new feature or a data security tip"
+main_words: "190-250"
+listening_type_1: "a customer calls tech support about a device that does not work"
+listening_type_2: "two friends talking about a new gadget one of them just bought"
+output_task: "Write 8 sentences: describe a device you use, one thing that was invented or made in a place, and report what a friend told you about their phone."
+```
+
+### Tuần 11: Environment & Nature
+
+```yaml
+week: 11
+topic: "Environment & Nature"
+level: "B1"
+n_words: 15
+n_chunks: 5
+situations: "environmental problems (pollution, waste); green habits at home and work; nature and wildlife; discussing solutions and giving opinions; volunteering and community action"
+grammar_points: "(1) relative clauses with who, which, that, where (defining only); (2) second conditional ('If we planted more trees, the air would be cleaner')"
+seeds: "pollution, waste, recycle, plastic, energy, solar power, protect, save, forest, wildlife, climate, global warming, carbon footprint, reduce, reuse, 'In my opinion...', 'We should...', 'What can we do?'"
+extended_hints: "biodiversity, deforestation, habitat loss, ecosystem restoration, climate adaptation, eco-tourism, environmental stewardship, sustainable practices, ecological balance, reforestation"
+speech_focus: "relative pronouns reduced ('the man who' → 'the man hoo'), sentence stress in opinions, long words ('environment' /ɪnˈvaɪrənmənt/, 'pollution'), 'would' as 'd"
+culture_note: "Opinion language should be polite and balanced. Learners often say 'the man which' for people, drop 'that' wrongly, and use 'will' instead of 'would' in 'If I had...'. Use hedges: 'I think', 'In my view'."
+reading_type_1: "a short article about reducing plastic waste"
+reading_type_2: "a volunteer sign-up flyer for a community clean-up"
+main_words: "190-250"
+listening_type_1: "a radio interview with a volunteer who organizes clean-ups"
+listening_type_2: "two colleagues discussing how to be more eco-friendly in the office"
+output_task: "Write 8 sentences: describe an environmental problem near you using 'which/that', and two ideas using 'If we ..., it would ...'."
+```
+
+---
+
+## 4. Tuần 12: Review & Assessment (prompt riêng)
+
+Tuần này **không dạy từ mới**. AI gom nội dung của 11 tuần, ôn theo khoảng cách và tạo bài nghe thử.
+
+```yaml
+week: 12
+topic: "Review & Assessment"
+level: "A1-B1 (mixed)"
+n_words: 0
+n_chunks: 0
+inputs:
+  all_core_lists_json: "<gộp vocab.json của tuần 1-11>"
+  all_grammar_json: "<gộp grammar.json của tuần 1-11>"
+  learner_error_log_json: "<danh sách id từ/cấu trúc người học làm sai; có thể rỗng>"
+```
+
+```
+STEP INSTRUCTION (WEEK 12 ONLY)
+Do not teach new vocabulary or grammar. Use ONLY items from the inputs.
+Create:
+1. REVIEW PLAN of 7 days. Days 1-5 revisit weeks 1-11 in spaced groups
+   (weeks 1-3, 4-6, 7-9, 10-11 and a mixed day). Items in the learner error
+   log come first and appear at least three times in the week.
+2. MIXED TEST of 24 items: 8 vocabulary, 8 grammar (one or two per grammar
+   point, from different weeks), 3 reading, 5 listening.
+3. LISTENING MOCK in three parts, scripts included (same rules as step D):
+   Part 1: five very short conversations (one question each, A1-A2).
+   Part 2: one longer dialogue (about 90 seconds, five questions, A2-B1).
+   Part 3: one short monologue such as an announcement or a talk (about 90
+   seconds, five questions, B1).
+4. CAN-DO CHECKLIST: 20 statements in Vietnamese ("Tôi có thể ...") covering
+   weeks 1-11, so the learner can tick what they can do.
+5. NEXT STEPS: a plan for the following 4 weeks in Vietnamese, by skill, in
+   general terms (types of resources and habits). No specific links.
+Follow all global rules and output the JSON schema below.
+```
+
+```json
+{
+  "week": 12,
+  "review_plan": [
+    {"day": 1, "focus_vi": "...", "covers_weeks": [1, 2, 3], "tasks": [], "done_when_vi": "..."}
+  ],
+  "mixed_test": [],
+  "listening_mock": {
+    "part1": [{"id": "w12.l1.1", "speakers": [], "lines": [], "question": {}}],
+    "part2": {"id": "w12.l2", "speakers": [], "lines": [], "questions": []},
+    "part3": {"id": "w12.l3", "speakers": [], "lines": [], "questions": []}
+  },
+  "can_do_checklist_vi": [],
+  "next_steps_vi": {"listening": "", "vocabulary": "", "grammar": "", "speaking_writing": ""},
+  "notes": ""
+}
+```
+
+Ghi chú: các đề luyện nghe chuẩn hóa (như mock test của các kỳ thi) mà PDF nhắc đến nên dùng như bài **ngoài web**; kiểm tra link trước khi thêm.
+
+---
+
+## 5. Danh sách kiểm tra khi duyệt nội dung AI
+
+Duyệt sau **lượt A** (rất quan trọng) và sau mỗi lượt khác.
+
+**Từ vựng (sau lượt A)**
+- [ ] Đủ số mục (từ + cụm), không có từ quá hiếm hay học thuật trong phần cốt lõi
+- [ ] Nghĩa tiếng Việt đúng với ngữ cảnh chủ đề
+- [ ] Collocation có tự nhiên không (nghi ngờ thì xóa)
+- [ ] Ví dụ tự nhiên, đúng trình độ, hai ví dụ ở hai tình huống khác nhau
+- [ ] Phần `vn_tip` đúng và hữu ích
+- [ ] Hai nhóm ngày 1 và ngày 2 cân bằng (khoảng 10 mục mỗi nhóm)
+
+**Ngữ pháp (lượt B)**
+- [ ] Giải thích theo chức năng, dễ hiểu bằng tiếng Việt
+- [ ] Ví dụ dùng từ trong danh sách đã duyệt
+- [ ] Lỗi người Việt hay mắc có thật và đúng
+- [ ] Bài tập có đáp án chính xác
+
+**Reading (lượt C)**
+- [ ] Độ dài và độ khó đúng trình độ
+- [ ] Ít nhất 70% từ cốt lõi xuất hiện, văn bản vẫn tự nhiên
+- [ ] Câu hỏi không thể trả lời bằng cách đoán, mỗi câu có đúng một đáp án
+
+**Listening (lượt D)**
+- [ ] Hội thoại nghe tự nhiên, câu ngắn, có rút gọn
+- [ ] `tts_text` đọc số, giờ, giá thành lời
+- [ ] Nghe thử bằng giọng máy: có chỗ đọc sai hoặc ngắt lạ không
+- [ ] Ghi chú nối âm đúng; số dòng của bài chép chính tả khớp với kịch bản
+
+**Mini test và lịch (lượt E)**
+- [ ] Mỗi câu hỏi có đáp án và giải thích
+- [ ] Câu nghe trỏ đúng `script_id` và số dòng
+- [ ] Lịch 7 ngày dùng đúng id, mỗi ngày dưới 90 phút, có tiêu chí hoàn thành
+
+**Kỹ thuật**
+- [ ] JSON hợp lệ (đọc được bằng `JSON.parse`)
+- [ ] Mọi id duy nhất, không trùng giữa các lượt
+- [ ] Tuần có chủ đề sức khỏe: không có chẩn đoán hay liều thuốc

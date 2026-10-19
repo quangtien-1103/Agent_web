@@ -1,0 +1,1 @@
+Create a 12-item mini test, an output task with three can-do criteria, a seven-day plan with two sessions of 30-45 minutes per day, and a spaced-review queue. Use real ids from all approved inputs.
