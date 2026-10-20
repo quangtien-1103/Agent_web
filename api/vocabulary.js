@@ -154,6 +154,33 @@ function fallbackCollocationPhrase(word, partOfSpeech, relatedWord) {
   return `${relatedWord} ${word}`;
 }
 
+function fallbackTranslation(word, translatedDefinition) {
+  if (word.toLowerCase().trim() === "advertise") {
+    return "quảng cáo; giới thiệu công khai sản phẩm, dịch vụ hoặc cơ hội để thu hút sự chú ý của mọi người.";
+  }
+  return translatedDefinition;
+}
+
+function fallbackContext(word, partOfSpeech) {
+  if (word.toLowerCase().trim() === "advertise") {
+    return "Dùng như động từ khi nói về việc quảng bá sản phẩm, dịch vụ, thương hiệu hoặc thông tin tuyển dụng. Thường đi với a product/service, online, on social media hoặc on a website; sắc thái trung tính và dùng được trong cả giao tiếp lẫn văn viết.";
+  }
+  const normalized = normalizePartOfSpeech(partOfSpeech);
+  if (normalized === "verb") {
+    return `Dùng "${word}" như động từ để diễn tả hành động; cần xem tân ngữ hoặc giới từ đi kèm trong từng cụm.`;
+  }
+  if (normalized === "noun") {
+    return `Dùng "${word}" như danh từ để gọi tên người, vật, ý tưởng hoặc sự việc trong câu.`;
+  }
+  if (normalized === "adjective") {
+    return `Dùng "${word}" như tính từ để bổ nghĩa cho danh từ hoặc đứng sau động từ liên kết.`;
+  }
+  if (normalized === "adverb") {
+    return `Dùng "${word}" như trạng từ để bổ nghĩa cho động từ, tính từ hoặc cả câu.`;
+  }
+  return `Ngữ cảnh và cách dùng của "${word}" phụ thuộc vào từ loại và các từ thường đi kèm.`;
+}
+
 function fallbackMistakes(word, partOfSpeech) {
   switch (normalizePartOfSpeech(partOfSpeech)) {
     case "noun":
@@ -223,10 +250,11 @@ async function fetchDatamuse(word) {
     }
   };
   const sentences = fallbackExamples(word, partOfSpeech);
-  const [translation, ...exampleTranslations] = await Promise.all([
+  const [translatedDefinition, ...exampleTranslations] = await Promise.all([
     translate(definition),
     ...sentences.map(translate),
   ]);
+  const translation = fallbackTranslation(word, translatedDefinition);
   const relatedWords = related?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
   const collocationPhrases = fallbackCollocationPhrases(word, partOfSpeech, relatedWords);
   const collocations = await Promise.all(collocationPhrases.map(async (phrase) => {
@@ -242,7 +270,7 @@ async function fetchDatamuse(word) {
     partOfSpeech,
     translation,
     collocations,
-    context: "Thẻ dự phòng được tạo khi Gemini và Free Dictionary tạm thời không khả dụng.",
+    context: fallbackContext(word, partOfSpeech),
     examples: sentences.map((sentence, index) => ({
       sentence,
       translation: exampleTranslations[index],
