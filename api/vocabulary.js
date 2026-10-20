@@ -5,10 +5,16 @@ const DICTIONARY_TIMEOUT_MS = 4000;
 const DATAMUSE_TIMEOUT_MS = 2500;
 const TRANSLATION_TIMEOUT_MS = 2000;
 export const config = { maxDuration: 10 };
-const PROMPT_TEXT = `Tạo nhanh một thẻ học từ vựng Anh-Việt chính xác cho từ được hỏi. Giải thích bằng tiếng Việt, ví dụ bằng tiếng Anh tự nhiên.
+const PROMPT_TEXT = `Tạo một thẻ học từ vựng Anh-Việt chính xác cho đúng từ và đúng nghĩa đang được tra. Giải thích bằng tiếng Việt, ví dụ bằng tiếng Anh tự nhiên.
 Chỉ trả về JSON hợp lệ theo cấu trúc:
 {"word":"...","pronunciation":"IPA","partOfSpeech":"...","translation":"...","collocations":[{"phrase":"...","translation":"..."}],"context":"...","examples":[{"sentence":"...","translation":"..."}],"synonyms":[{"word":"...","difference":"..."}],"commonMistakes":["..."]}
-Yêu cầu: 2-3 collocations có bản dịch cả cụm, 3 examples có bản dịch, 2 synonyms. Không dùng markdown, không giải thích ngoài JSON.`;
+Yêu cầu bắt buộc:
+- Xác định đúng từ loại và chỉ dùng một nghĩa nhất quán trong translation, collocations và examples. Nếu từ có nhiều từ loại, chọn từ loại phù hợp nhất với nghĩa chính.
+- Mỗi collocation phải là cụm tự nhiên chứa đúng từ được hỏi; dịch nghĩa của cả cụm.
+- Ba examples phải là câu hoàn chỉnh, tự nhiên, có đúng từ được hỏi dùng đúng từ loại và đúng nghĩa; mỗi câu ở một ngữ cảnh khác nhau và có bản dịch tiếng Việt sát nghĩa.
+- Synonyms chỉ gồm từ gần nghĩa thật sự trong cùng từ loại; difference phải nêu điểm khác nhau cụ thể, không dùng nhận xét chung chung.
+- commonMistakes phải là lỗi dùng chính từ này (vị trí, từ loại, giới từ, cấu trúc hoặc sắc thái), không viết lời khuyên chung có thể áp dụng cho mọi từ.
+Không dùng markdown, không giải thích ngoài JSON.`;
 
 function requiredWord(value) {
   if (typeof value !== "string" || !value.trim()) {
@@ -80,6 +86,101 @@ function dictionaryCard(entry, word) {
   };
 }
 
+function normalizePartOfSpeech(value) {
+  const partOfSpeech = String(value || "").toLowerCase();
+  if (/\b(noun|n)\b/.test(partOfSpeech)) return "noun";
+  if (/\b(verb|v)\b/.test(partOfSpeech)) return "verb";
+  if (/\b(adjective|adj)\b/.test(partOfSpeech)) return "adjective";
+  if (/\b(adverb|adv)\b/.test(partOfSpeech)) return "adverb";
+  return "word";
+}
+
+function fallbackExamples(word, partOfSpeech) {
+  const normalizedWord = word.toLowerCase().trim();
+  if (normalizedWord === "advertise") {
+    return [
+      `The company advertised its new product on social media.`,
+      `Local businesses advertise their services to attract more customers.`,
+      `The university advertised the job opening on its website.`,
+    ];
+  }
+  switch (normalizePartOfSpeech(partOfSpeech)) {
+    case "noun":
+      return [
+        `The ${word} is important in this situation.`,
+        `She explained the ${word} clearly.`,
+        `We discussed the ${word} before making a decision.`,
+      ];
+    case "verb":
+      return [
+        `We need to ${word} this carefully.`,
+        `She decided to ${word} before the meeting.`,
+        `They usually ${word} when they have enough time.`,
+      ];
+    case "adjective":
+      return [
+        `The result is ${word}.`,
+        `She described the situation as ${word}.`,
+        `Many people consider the result ${word}.`,
+      ];
+    case "adverb":
+      return [
+        `She answered the question ${word}.`,
+        `He ${word} explained what happened.`,
+        `The team worked ${word} to solve the problem.`,
+      ];
+    default:
+      return [
+        `This example shows how to use ${word} naturally.`,
+        `Please check the meaning of ${word} in this sentence.`,
+        `The context helps explain the word ${word}.`,
+      ];
+  }
+}
+
+function fallbackCollocationPhrases(word, partOfSpeech, relatedWords = []) {
+  const normalizedWord = word.toLowerCase().trim();
+  if (normalizedWord === "advertise") {
+    return [`advertise a product`, `advertise a service`, `advertise online`];
+  }
+  return relatedWords.map((relatedWord) => fallbackCollocationPhrase(word, partOfSpeech, relatedWord));
+}
+
+function fallbackCollocationPhrase(word, partOfSpeech, relatedWord) {
+  const normalized = normalizePartOfSpeech(partOfSpeech);
+  if (normalized === "verb") return `${word} ${relatedWord}`;
+  if (normalized === "adjective") return `${relatedWord} ${word}`;
+  if (normalized === "adverb") return `${word} ${relatedWord}`;
+  return `${relatedWord} ${word}`;
+}
+
+function fallbackMistakes(word, partOfSpeech) {
+  switch (normalizePartOfSpeech(partOfSpeech)) {
+    case "noun":
+      return [
+        `Dùng "${word}" như danh từ; không đặt trực tiếp sau "to" nếu muốn diễn đạt hành động.`,
+        `Kiểm tra mạo từ (a/an/the) và dạng số nhiều khi dùng "${word}" trong câu.`,
+      ];
+    case "verb":
+      return [
+        `Dùng đúng dạng của động từ "${word}" sau chủ ngữ và sau "to".`,
+        `Không thêm "to" sau động từ khuyết thiếu khi dùng "${word}".`,
+      ];
+    case "adjective":
+      return [
+        `Dùng "${word}" để bổ nghĩa cho danh từ hoặc sau các động từ liên kết như be, seem, feel.`,
+        `Không dùng "${word}" như trạng từ nếu muốn bổ nghĩa cho một động từ khác.`,
+      ];
+    case "adverb":
+      return [
+        `Đặt "${word}" ở vị trí phù hợp để bổ nghĩa cho động từ hoặc cả câu.`,
+        `Không nhầm "${word}" với dạng tính từ liên quan khi bổ nghĩa cho danh từ.`,
+      ];
+    default:
+      return [`Kiểm tra từ loại và cấu trúc đi cùng "${word}" trước khi đặt vào câu.`];
+  }
+}
+
 async function fetchFreeDictionary(word) {
   const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`, {
     signal: AbortSignal.timeout(DICTIONARY_TIMEOUT_MS),
@@ -121,20 +222,19 @@ async function fetchDatamuse(word) {
       return text;
     }
   };
-  const sentences = [
-    `I use ${word} every day.`,
-    `We need to ${word} this carefully.`,
-    `This is a useful example of ${word}.`,
-  ];
+  const sentences = fallbackExamples(word, partOfSpeech);
   const [translation, ...exampleTranslations] = await Promise.all([
     translate(definition),
     ...sentences.map(translate),
   ]);
-  const collocationWords = related?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
-  const collocations = await Promise.all(collocationWords.map(async (item) => ({
-    phrase: `${item} ${word}`,
-    translation: await translate(`${item} ${word}`),
-  })));
+  const relatedWords = related?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
+  const collocationPhrases = fallbackCollocationPhrases(word, partOfSpeech, relatedWords);
+  const collocations = await Promise.all(collocationPhrases.map(async (phrase) => {
+    return {
+      phrase,
+      translation: await translate(phrase),
+    };
+  }));
   const synonymItems = synonyms?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
   return {
     word: entry.word || word,
@@ -149,12 +249,9 @@ async function fetchDatamuse(word) {
     })),
     synonyms: synonymItems.map((item) => ({
       word: item,
-      difference: "Từ có nghĩa gần giống; hãy kiểm tra ngữ cảnh trước khi thay thế.",
+      difference: `"${item}" gần nghĩa với "${word}" nhưng có thể khác về sắc thái hoặc cách kết hợp từ.`,
     })),
-    commonMistakes: [
-      `Đặt "${word}" đúng vị trí trong câu và kiểm tra loại từ (${partOfSpeech}).`,
-      "Không dịch từng từ theo tiếng Việt; hãy học cả cụm và câu ví dụ.",
-    ],
+    commonMistakes: fallbackMistakes(word, partOfSpeech),
   };
 }
 
