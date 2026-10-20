@@ -97,6 +97,7 @@ function normalizePartOfSpeech(value) {
 
 function fallbackExamples(word, partOfSpeech, definition = "") {
   const normalizedWord = word.toLowerCase().trim();
+  const normalizedDefinition = definition.toLowerCase();
   if (normalizedWord === "advertise") {
     return [
       `The company advertised its new product on social media.`,
@@ -109,6 +110,13 @@ function fallbackExamples(word, partOfSpeech, definition = "") {
       `The hotel closed one floor for renovation.`,
       `After months of renovation, the old house looked brand-new.`,
       `The renovation of the kitchen cost more than expected.`,
+    ];
+  }
+  if (normalizedWord === "aisle" || /\b(aisle|passage|walkway)\b/.test(normalizedDefinition)) {
+    return [
+      `We found two empty seats near the aisle.`,
+      `A flight attendant walked down the aisle to check the passengers.`,
+      `Please leave your bags out of the aisle.`,
     ];
   }
   switch (normalizePartOfSpeech(partOfSpeech)) {
@@ -153,6 +161,9 @@ function fallbackCollocationPhrases(word, partOfSpeech, relatedWords = []) {
   if (normalizedWord === "renovation") {
     return ["home renovation", "renovation project", "renovation work"];
   }
+  if (normalizedWord === "aisle") {
+    return ["aisle seat", "walk down the aisle", "keep the aisle clear"];
+  }
   return relatedWords.map((relatedWord) => fallbackCollocationPhrase(word, partOfSpeech, relatedWord));
 }
 
@@ -171,6 +182,9 @@ function fallbackTranslation(word, translatedDefinition) {
   if (word.toLowerCase().trim() === "renovation") {
     return "sự cải tạo, sự sửa sang hoặc việc nâng cấp một tòa nhà, căn phòng hay công trình.";
   }
+  if (word.toLowerCase().trim() === "aisle") {
+    return "lối đi giữa các hàng ghế, kệ hàng hoặc các dãy trong một không gian như máy bay, nhà hát hay siêu thị.";
+  }
   return translatedDefinition;
 }
 
@@ -181,12 +195,15 @@ function fallbackContext(word, partOfSpeech) {
   if (word.toLowerCase().trim() === "renovation") {
     return "Dùng như danh từ khi nói về việc sửa sang hoặc nâng cấp nhà cửa, phòng ốc và công trình. Thường đi với home/house renovation, renovation project hoặc renovation work; nhấn mạnh việc cải thiện một nơi đã có sẵn, không phải xây mới hoàn toàn.";
   }
+  if (word.toLowerCase().trim() === "aisle") {
+    return "Dùng như danh từ để chỉ lối đi nằm giữa các hàng ghế hoặc dãy kệ, thường gặp trên máy bay, trong nhà hát, nhà thờ và siêu thị. Các cụm thường gặp gồm aisle seat và walk down the aisle.";
+  }
   const normalized = normalizePartOfSpeech(partOfSpeech);
   if (normalized === "verb") {
     return `Dùng "${word}" như động từ để diễn tả hành động; cần xem tân ngữ hoặc giới từ đi kèm trong từng cụm.`;
   }
   if (normalized === "noun") {
-    return `Dùng "${word}" như danh từ để gọi tên người, vật, ý tưởng hoặc sự việc trong câu.`;
+    return `Dùng "${word}" như danh từ để chỉ đúng người, vật, nơi chốn hoặc khái niệm mà định nghĩa mô tả; hãy học cùng các cụm từ thường đi kèm.`;
   }
   if (normalized === "adjective") {
     return `Dùng "${word}" như tính từ để bổ nghĩa cho danh từ hoặc đứng sau động từ liên kết.`;
