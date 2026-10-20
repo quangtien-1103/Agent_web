@@ -9,7 +9,7 @@ mountFooter();
 const result = document.querySelector("#word-result");
 let currentCard = null;
 let loading = false;
-const WORD_CACHE_PREFIX = "english-web:word-card:v5:";
+const WORD_CACHE_PREFIX = "english-web:word-card:v6:";
 const WORD_CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
 
 function wordCacheKey(word) {

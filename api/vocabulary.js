@@ -175,6 +175,18 @@ function fallbackCollocationPhrase(word, partOfSpeech, relatedWord) {
   return `${relatedWord} ${word}`;
 }
 
+function fallbackCollocationTranslation(word, phrase, translatedPhrase) {
+  if (word.toLowerCase().trim() === "aisle") {
+    const translations = {
+      "aisle seat": "ghế ngồi cạnh lối đi",
+      "walk down the aisle": "đi dọc theo lối đi",
+      "keep the aisle clear": "giữ cho lối đi thông thoáng",
+    };
+    return translations[phrase] || translatedPhrase;
+  }
+  return translatedPhrase;
+}
+
 function fallbackTranslation(word, translatedDefinition) {
   if (word.toLowerCase().trim() === "advertise") {
     return "quảng cáo; giới thiệu công khai sản phẩm, dịch vụ hoặc cơ hội để thu hút sự chú ý của mọi người.";
@@ -215,6 +227,12 @@ function fallbackContext(word, partOfSpeech) {
 }
 
 function fallbackMistakes(word, partOfSpeech) {
+  if (word.toLowerCase().trim() === "aisle") {
+    return [
+      `"aisle" là danh từ chỉ lối đi; không nhầm với "isle" (hòn đảo) dù hai từ phát âm giống nhau.`,
+      `Dùng "aisle seat" để nói ghế cạnh lối đi, không dùng "aisle chair".`,
+    ];
+  }
   switch (normalizePartOfSpeech(partOfSpeech)) {
     case "noun":
       return [
@@ -291,9 +309,10 @@ async function fetchDatamuse(word) {
   const relatedWords = related?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
   const collocationPhrases = fallbackCollocationPhrases(word, partOfSpeech, relatedWords);
   const collocations = await Promise.all(collocationPhrases.map(async (phrase) => {
+    const translatedPhrase = await translate(phrase);
     return {
       phrase,
-      translation: await translate(phrase),
+      translation: fallbackCollocationTranslation(word, phrase, translatedPhrase),
     };
   }));
   const synonymItems = synonyms?.map((item) => item.word).filter(Boolean).slice(0, 3) || [];
