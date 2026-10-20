@@ -95,13 +95,20 @@ function normalizePartOfSpeech(value) {
   return "word";
 }
 
-function fallbackExamples(word, partOfSpeech) {
+function fallbackExamples(word, partOfSpeech, definition = "") {
   const normalizedWord = word.toLowerCase().trim();
   if (normalizedWord === "advertise") {
     return [
       `The company advertised its new product on social media.`,
       `Local businesses advertise their services to attract more customers.`,
       `The university advertised the job opening on its website.`,
+    ];
+  }
+  if (normalizedWord === "renovation" || /\brenovat\w*\b/.test(definition.toLowerCase())) {
+    return [
+      `The hotel closed one floor for renovation.`,
+      `After months of renovation, the old house looked brand-new.`,
+      `The renovation of the kitchen cost more than expected.`,
     ];
   }
   switch (normalizePartOfSpeech(partOfSpeech)) {
@@ -143,6 +150,9 @@ function fallbackCollocationPhrases(word, partOfSpeech, relatedWords = []) {
   if (normalizedWord === "advertise") {
     return [`advertise a product`, `advertise a service`, `advertise online`];
   }
+  if (normalizedWord === "renovation") {
+    return ["home renovation", "renovation project", "renovation work"];
+  }
   return relatedWords.map((relatedWord) => fallbackCollocationPhrase(word, partOfSpeech, relatedWord));
 }
 
@@ -158,12 +168,18 @@ function fallbackTranslation(word, translatedDefinition) {
   if (word.toLowerCase().trim() === "advertise") {
     return "quảng cáo; giới thiệu công khai sản phẩm, dịch vụ hoặc cơ hội để thu hút sự chú ý của mọi người.";
   }
+  if (word.toLowerCase().trim() === "renovation") {
+    return "sự cải tạo, sự sửa sang hoặc việc nâng cấp một tòa nhà, căn phòng hay công trình.";
+  }
   return translatedDefinition;
 }
 
 function fallbackContext(word, partOfSpeech) {
   if (word.toLowerCase().trim() === "advertise") {
     return "Dùng như động từ khi nói về việc quảng bá sản phẩm, dịch vụ, thương hiệu hoặc thông tin tuyển dụng. Thường đi với a product/service, online, on social media hoặc on a website; sắc thái trung tính và dùng được trong cả giao tiếp lẫn văn viết.";
+  }
+  if (word.toLowerCase().trim() === "renovation") {
+    return "Dùng như danh từ khi nói về việc sửa sang hoặc nâng cấp nhà cửa, phòng ốc và công trình. Thường đi với home/house renovation, renovation project hoặc renovation work; nhấn mạnh việc cải thiện một nơi đã có sẵn, không phải xây mới hoàn toàn.";
   }
   const normalized = normalizePartOfSpeech(partOfSpeech);
   if (normalized === "verb") {
@@ -249,7 +265,7 @@ async function fetchDatamuse(word) {
       return text;
     }
   };
-  const sentences = fallbackExamples(word, partOfSpeech);
+  const sentences = fallbackExamples(word, partOfSpeech, definition);
   const [translatedDefinition, ...exampleTranslations] = await Promise.all([
     translate(definition),
     ...sentences.map(translate),
